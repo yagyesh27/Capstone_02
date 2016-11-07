@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">MyCoordinatorApplicationTest</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_location">Location</string>
+    <string name="action_places">Places</string>
+
+    <string name="api_key">"https://newsapi.org_Key"</string>
+    <string name="weather_api_key">"http://api.openweathermap.org_key"</string>
+    <string name="lat">35</string>
+    <string name="lon">139</string>
+
+    <string name="title_activity_detail">DetailActivity</string>
+    <string name="title_activity_detail_news">DetailNewsActivity</string>
+    <string name="title_activity_position">PositionActivity</string>
+    <string name="title_activity_places">PlacesActivity</string>
+</resources>
