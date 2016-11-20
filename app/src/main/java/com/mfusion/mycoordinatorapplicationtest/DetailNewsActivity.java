@@ -35,9 +35,13 @@ public class DetailNewsActivity extends AppCompatActivity {
             }
         });
 
-        Picasso.with(this).load(imgUrl).into((ImageView)findViewById(R.id.imagePoster));
+        findViewById(R.id.fab).setContentDescription("Go To Home");
+
+        Picasso.with(this).load(imgUrl).into((ImageView) findViewById(R.id.imagePoster));
         ((TextView)findViewById(R.id.title_art)).setText(title);
+        findViewById(R.id.title_art).setContentDescription(title);
         ((TextView)findViewById(R.id.desc_art)).setText(desc);
+        findViewById(R.id.desc_art).setContentDescription(desc);
     }
 
     @Override

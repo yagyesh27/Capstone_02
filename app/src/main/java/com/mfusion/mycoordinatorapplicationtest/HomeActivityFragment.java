@@ -1,18 +1,15 @@
 package com.mfusion.mycoordinatorapplicationtest;
 
 import android.Manifest;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,16 +21,12 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.mfusion.mycoordinatorapplicationtest.data.ArticleSourceImage;
-import com.mfusion.mycoordinatorapplicationtest.data.ArticleSourceImageProvider;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -47,17 +40,18 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, LoaderManager.LoaderCallbacks<ArrayList<ArticleSourceImage>> {
+/**
+ * A placeholder fragment containing a simple view.
+ */
+public class HomeActivityFragment extends Fragment implements
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     static String JSONstring;
     String imageUrl1,imageUrl2,imageUrl3,imageUrl4,imageUrl5,imageUrl6;
     String[] imageUrls = {"", "", "", "", "", ""};
     String[] artImageUrls = {"", "", "", "", "", ""};
     Intent intent = null;
-    GridImgViewAdap adapter;
     public GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
     private static final String[] INITIAL_PERMS={
@@ -68,65 +62,35 @@ public class MainActivity extends AppCompatActivity implements
     public String longitude = "";
     public String country = "";
     public String countryPrev = "";
-    public String place = "";
-    public String weatherDesc = "";
-    public double maxTemp ;
-    public double minTemp ;
-    public double speed ;
-    int weatherId;
+    View rootView;
+
+    public interface Callback{
+
+        public void onItemSelected(Bundle extras);
+    }
+
+    public HomeActivityFragment() {
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
+
+
+        rootView.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String URL = "content://com.mfusion.mycoordinatorapplicationtest.data.ArticleSourceImageProvider";
-
-                Uri students = Uri.parse(URL);
-                Cursor c = getContentResolver().query(students, null, null, null, "name");
-
-                if (c.moveToFirst()) {
-                    do{
-                        Toast.makeText(MainActivity.this,
-                                c.getString(c.getColumnIndex( ArticleSourceImage.COL_SOURCE)) +
-                                        ", " + c.getString(c.getColumnIndex( ArticleSourceImage.COL_ART_IMG_URL)),
-                                Toast.LENGTH_SHORT).show();
-                    } while (c.moveToNext());
-                }
-
-                /*Log.d("DB return", c.getString(c.getColumnIndex( ArticleSourceImage.COL_SOURCE)) +
-                        ", " + c.getString(c.getColumnIndex( ArticleSourceImage.COL_ART_IMG_URL)));*/
-
                 Snackbar.make(view, "Hello Snackbar", Snackbar.LENGTH_LONG).show();
             }
         });
 
-        findViewById(R.id.weather_img).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),WeatherActivity.class);
-                i.putExtra("weatherId",weatherId);
-                i.putExtra("country",country);
-                i.putExtra("place",place);
-                i.putExtra("maxTemp",maxTemp);
-                i.putExtra("minTemp",minTemp);
-                i.putExtra("speed",speed);
-                i.putExtra("weatherDesc",weatherDesc);
+        intent = new Intent(getActivity(), ArticlesListActivity.class);
 
-                startActivity(i);
-
-
-
-            }
-        });
-
-        intent = new Intent(getApplicationContext(), DetailActivity.class);
-
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+        Toolbar myToolbar = (Toolbar) rootView.findViewById(R.id.my_toolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar();
+        //setSupportActionBar(myToolbar);
         //Tool bar http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=weatherkey
 
         /*findViewById(R.id.thumbnail1).setOnClickListener(new View.OnClickListener() {
@@ -147,6 +111,58 @@ public class MainActivity extends AppCompatActivity implements
         });*/
 
         if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+
+        }
+
+        mGoogleApiClient.connect();
+
+        //new FetchWeatherdata().execute("weather");
+        //new Fetchdata().execute("Thumbnail");
+        return rootView;
+    }
+
+
+
+    /*@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Hello Snackbar", Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+        intent = new Intent(getApplicationContext(), DetailActivity.class);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        //Tool bar http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=weatherkey
+
+        *//*findViewById(R.id.thumbnail1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("inMain","next is intent call");
+
+                startActivity(intent);
+
+                *//**//*i.putExtra("poster_url", posters[position]);
+                i.putExtra("title", title[position]);
+                i.putExtra("release_date", release_date[position]);
+                i.putExtra("vote_avg", vote_avg[position]);
+                i.putExtra("plot_synopsis", plot_synopsis[position]);
+
+                startActivity(i);*//**//*
+            }
+        });*//*
+
+        if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(MainActivity.this)
                     .addConnectionCallbacks(this)
                     .addOnConnectionFailedListener(this)
@@ -161,46 +177,14 @@ public class MainActivity extends AppCompatActivity implements
         //new Fetchdata().execute("Thumbnail");
 
 
-    }
+    }*/
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        if (id == R.id.action_location) {
-            startActivity(new Intent(getApplicationContext(), PositionActivity.class));
-            return true;
-        }
-        if (id == R.id.action_places) {
-            startActivity(new Intent(getApplicationContext(), PlacesActivity.class));
-            return true;
-        }
-        if (id == R.id.action_home) {
-            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onConnected(Bundle bundle) {
 
-        Log.d("onConnected","onConnected");
+        Log.d("onConnected", "onConnected");
 
 
 
@@ -233,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
 
-       // Toast.makeText(MainActivity.this, "Latitude = " + (Double.toString(location.getLatitude())) + "Longitude = " + (Double.toString(location.getLongitude())), Toast.LENGTH_LONG).show();
+        // Toast.makeText(MainActivity.this, "Latitude = " + (Double.toString(location.getLatitude())) + "Longitude = " + (Double.toString(location.getLongitude())), Toast.LENGTH_LONG).show();
         new FetchWeatherdata().execute("weather");
         /*new Fetchdata().execute("Thumbnail");*/
         if(!country.equals(countryPrev)){
@@ -245,26 +229,6 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-
-    }
-
-    @Override
-    public Loader<ArrayList<ArticleSourceImage>> onCreateLoader(int id, Bundle args) {
-        return new MyContentLoader(MainActivity.this);
-    }
-
-
-    @Override
-    public void onLoadFinished(Loader<ArrayList<ArticleSourceImage>> loader, ArrayList<ArticleSourceImage> data) {
-
-        adapter.setArticleSourceImages(data);
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader loader) {
-
-        adapter.setArticleSourceImages(new ArrayList<ArticleSourceImage>());
 
     }
 
@@ -370,37 +334,8 @@ public class MainActivity extends AppCompatActivity implements
                 imageUrls[5] = getImgUrl(url6);
                 artImageUrls[5] = getImgArtUrl(imageUrls[5]);
 
-                for(int i=0; i<6 ; i++){
-
-                    ContentValues values = new ContentValues();
-                    values.put(ArticleSourceImage.COL_SOURCE,imageUrls[i]
-                           );
-
-                    values.put(ArticleSourceImage.COL_ART_IMG_URL,artImageUrls[i]
-                           );
-
-                    Uri uri = getContentResolver().insert(
-                            ArticleSourceImageProvider.URI_ARTICLESOURCES, values);
-
-                    Log.d("URI_ARTICLESOURCES",
-                            uri.toString());
-
-                }
 
 
-/*
-                ContentValues values = new ContentValues();
-                values.put(ArticleSourceImage.COL_ID,
-                        ((EditText)findViewById(R.id.editText2)).getText().toString());
-
-                values.put(ArticleSourceImage.GRADE,
-                        ((EditText)findViewById(R.id.editText3)).getText().toString());
-
-                Uri uri = getContentResolver().insert(
-                        ArticleSourceImage.CONTENT_URI, values);
-
-                Toast.makeText(getBaseContext(),
-                        uri.toString(), Toast.LENGTH_LONG).show();*////////////////////////////////////////////////////bc
 
 
 
@@ -515,83 +450,83 @@ public class MainActivity extends AppCompatActivity implements
             try{
 
 
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
 
 
 
-            InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
+                InputStream inputStream = urlConnection.getInputStream();
+                StringBuffer buffer = new StringBuffer();
 
-            reader = new BufferedReader(new InputStreamReader(inputStream));
+                reader = new BufferedReader(new InputStreamReader(inputStream));
 
-            String line;
-            while ((line = reader.readLine()) != null) {
+                String line;
+                while ((line = reader.readLine()) != null) {
 
-                buffer.append(line + "\n");
-            }
+                    buffer.append(line + "\n");
+                }
 
-            if (buffer.length() == 0) {
+                if (buffer.length() == 0) {
+
+                    return null;
+                }
+                dataJsonStrImg = buffer.toString();
+                Log.d("Jsondata1", dataJsonStrImg);
+                // Log.d("Jsondata2", MainActivity.JSONstring);
+            } catch (IOException e) {
+                Log.e("MainActivity", "Error ", e);
 
                 return null;
-            }
-            dataJsonStrImg = buffer.toString();
-            Log.d("Jsondata1", dataJsonStrImg);
-           // Log.d("Jsondata2", MainActivity.JSONstring);
-        } catch (IOException e) {
-            Log.e("MainActivity", "Error ", e);
-
-            return null;
-        } finally {
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (final IOException e) {
-                    Log.e("PlaceholderFragment", "Error closing stream", e);
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (final IOException e) {
+                        Log.e("PlaceholderFragment", "Error closing stream", e);
+                    }
                 }
             }
-        }
 
-        ArrayList a = new ArrayList();
-        try {
-            Log.d("Jsondata", ".JSONObject>");
-            JSONObject articleJson = new JSONObject(dataJsonStrImg);
-            Log.d("Jsondata", ".JSONObject<");
-            JSONArray sources = articleJson.getJSONArray("sources");
-            Log.d("Jsondata", ".length()>");
-            String[] titles = new String[sources.length()];
-            Log.d("Jsondata", ".length()<");
+            ArrayList a = new ArrayList();
+            try {
+                Log.d("Jsondata", ".JSONObject>");
+                JSONObject articleJson = new JSONObject(dataJsonStrImg);
+                Log.d("Jsondata", ".JSONObject<");
+                JSONArray sources = articleJson.getJSONArray("sources");
+                Log.d("Jsondata", ".length()>");
+                String[] titles = new String[sources.length()];
+                Log.d("Jsondata", ".length()<");
 
-            JSONObject ob;
-            for (int i = 0; i < sources.length(); i++) {
-                ob = sources.getJSONObject(i);
-                JSONObject urls = ob.getJSONObject("urlsToLogos");
+                JSONObject ob;
+                for (int i = 0; i < sources.length(); i++) {
+                    ob = sources.getJSONObject(i);
+                    JSONObject urls = ob.getJSONObject("urlsToLogos");
 
-                if(i==0){
-                    sourceId = ob.getString("id");
-                    imageUrlStr = urls.getString("small");
-                    Log.d("UrlStr",imageUrlStr);
+                    if(i==0){
+                        sourceId = ob.getString("id");
+                        imageUrlStr = urls.getString("small");
+                        Log.d("UrlStr",imageUrlStr);
+                    }
+
+                    a.add(0, titles);
+
+
+
+                    //Log.d("Articles", titles[i]);
                 }
 
-                a.add(0, titles);
 
-
-
-                //Log.d("Articles", titles[i]);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
 
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        //return imageUrlStr;
+            //return imageUrlStr;
             return sourceId;
-    }
+        }
 
         public String getImgArtUrl(String srcId){
             String imageUrlStr = "";
@@ -699,60 +634,21 @@ public class MainActivity extends AppCompatActivity implements
             vote_avg = (String[]) list.get(3);
             plot_synopsis = (String[]) list.get(4);*/
 
-
-            String URL = "content://com.mfusion.mycoordinatorapplicationtest.data.ArticleSourceImageProvider";
-
-            Uri students = Uri.parse(URL);
-            Cursor c = getContentResolver().query(students, null, null, null, "name");
-
-
-
-            if (c.moveToFirst()) {
-                do{
-                    /*Toast.makeText(MainActivity.this,
-                            c.getString(c.getColumnIndex( ArticleSourceImage.COL_SOURCE)) +
-                                    ", " + c.getString(c.getColumnIndex( ArticleSourceImage.COL_ART_IMG_URL)),
-                            Toast.LENGTH_SHORT).show();*/
-
-                    Log.d("DB return", c.getString(c.getColumnIndex(ArticleSourceImage.COL_SOURCE)) +
-                            ", " + c.getString(c.getColumnIndex(ArticleSourceImage.COL_ART_IMG_URL)));
-
-                } while (c.moveToNext());
-            }
-
-
-
-            adapter = new GridImgViewAdap(MainActivity.this, new ArrayList<ArticleSourceImage>());
-            GridView grid = (GridView) findViewById(R.id.gridView);
+            GridImgViewAdap adapter = new GridImgViewAdap(getActivity());
+            GridView grid = (GridView) rootView.findViewById(R.id.gridView);
             grid.setAdapter(adapter);
 
             grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     Log.d("Clicked", "Clicked");
-                 /*   String URL = "content://com.mfusion.mycoordinatorapplicationtest.data.ArticleSourceImageProvider";
-
-                    Uri students = Uri.parse(URL);
-                    Cursor c = getContentResolver().query(students, null, null, null, "name");
-
-                    if (c.moveToFirst()) {
-                        do{
-                            Toast.makeText(MainActivity.this,
-                                    c.getString(c.getColumnIndex( ArticleSourceImage.COL_SOURCE)) +
-                                            ", " + c.getString(c.getColumnIndex( ArticleSourceImage.COL_ART_IMG_URL)),
-                                    Toast.LENGTH_SHORT).show();
-                        } while (c.moveToNext());
-                    }
-
-                    Log.d("DB return", c.getString(c.getColumnIndex( ArticleSourceImage.COL_SOURCE)) +
-                            ", " + c.getString(c.getColumnIndex( ArticleSourceImage.COL_ART_IMG_URL)));*/
-                    intent.putExtra("srcId",imageUrls[i]);
-                    startActivity(intent);
+                    Bundle extras = new Bundle();
+                    extras.putString("srcId",imageUrls[i]);
+                    ((Callback) getActivity()).onItemSelected(extras);
+                    //intent.putExtra("srcId",imageUrls[i]);
+                    //startActivity(intent);
                 }
             });
-
-
-
 
             /*Picasso.with(getApplicationContext()).load(imageUrl1).into((ImageView)findViewById(R.id.thumbnail1));
             Picasso.with(getApplicationContext()).load(imageUrl2).into((ImageView)findViewById(R.id.thumbnail2));
@@ -797,8 +693,7 @@ public class MainActivity extends AppCompatActivity implements
     public class FetchWeatherdata extends AsyncTask<String , Void , ArrayList> {
 
         String weatherJsonString = "";
-
-        String main;
+        int weatherId;
 
 
         protected ArrayList doInBackground(String[] params) {
@@ -878,16 +773,6 @@ public class MainActivity extends AppCompatActivity implements
                 JSONObject weatherJson = new JSONObject(weatherJsonString);
                 JSONArray weather = weatherJson.getJSONArray("weather");
                 JSONObject sys = weatherJson.getJSONObject("sys");
-                JSONObject oMain = weatherJson.getJSONObject("main");
-
-                maxTemp = oMain.getDouble("temp_max") - 274 ;
-                minTemp = oMain.getDouble("temp_min") - 274 ;
-
-                place = weatherJson.getString("name");
-
-                JSONObject wind = weatherJson.getJSONObject("wind");
-
-                speed = wind.getDouble("speed");
 
                 country = (sys.getString("country")).toLowerCase();
 
@@ -895,8 +780,7 @@ public class MainActivity extends AppCompatActivity implements
 
                 JSONObject weatherObj = weather.getJSONObject(0);
                 weatherId = weatherObj.getInt("id");
-                main = weatherObj.getString("main");
-                weatherDesc = main;
+
                 Log.d("weatherId",Integer.toString(weatherId));
 
       /*          String[] posters = new String[movie.length()];
@@ -947,8 +831,7 @@ public class MainActivity extends AppCompatActivity implements
         protected void onPostExecute(ArrayList list) {
             super.onPostExecute(list);
 
-            ((ImageView)findViewById(R.id.weather_img)).setImageResource(getIconResourceForWeatherCondition(weatherId));
-            findViewById(R.id.weather_img).setContentDescription(main);
+            ((ImageView)rootView.findViewById(R.id.weather_img)).setImageResource(getIconResourceForWeatherCondition(weatherId));
 
 /*
             posters = (String[]) list.get(0);
@@ -1038,24 +921,15 @@ public class MainActivity extends AppCompatActivity implements
 
     public class GridImgViewAdap extends BaseAdapter {
         private Context mContext;
-        private LayoutInflater inflater;
-
-        private ArrayList<ArticleSourceImage> artSource = new ArrayList<ArticleSourceImage>();
         Integer[] mThumbnails;
-
-        public GridImgViewAdap(Context context, ArrayList<ArticleSourceImage> artSource) {
-            this.artSource = artSource;
-            inflater = LayoutInflater.from(context);
-        }
-
         @Override
         public int getCount() {
             return 6;
         }
 
         @Override
-        public ArticleSourceImage getItem(int i) {
-            return artSource.get(i);
+        public Object getItem(int i) {
+            return mThumbnails[i];
         }
 
         @Override
@@ -1070,7 +944,6 @@ public class MainActivity extends AppCompatActivity implements
         @Override
         public View getView(int i, View convertView, ViewGroup viewGroup) {
             View grid;
-            ArticleSourceImage source = getItem(i);
             LayoutInflater inflater = (LayoutInflater) mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             if (convertView == null) {
@@ -1080,7 +953,7 @@ public class MainActivity extends AppCompatActivity implements
                 ImageView imageView = (ImageView)grid.findViewById(R.id.imageViewGrid);
                 imageView.setAdjustViewBounds(true);
 
-                Picasso.with(mContext).load(source.artImgUrl).into(imageView);
+                Picasso.with(mContext).load(artImageUrls[i]).into(imageView);
 
 
             } else {
@@ -1089,12 +962,5 @@ public class MainActivity extends AppCompatActivity implements
 
             return grid;
         }
-
-        public void setArticleSourceImages(ArrayList<ArticleSourceImage> data) {
-            artSource.addAll(data);
-            notifyDataSetChanged();
-        }
-
     }
-
 }

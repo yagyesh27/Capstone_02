@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#6600bcff">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+ <!--       <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/weather_img"
+            android:layout_gravity="end"
+            android:layout_marginRight="0dp"
+            android:src="@drawable/abc_scrubber_control_to_pressed_mtrl_000" /-->>
+
+    </android.support.v7.widget.Toolbar>
+
+
+
+<TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+android:layout_marginTop="70dp"
+    android:layout_marginLeft="0dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp">
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="5dp"
+        android:gravity="center_horizontal">
+
+        <ImageView android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/weatherImage"
+            android:gravity="center_horizontal"
+            />
+
+    </TableRow>
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:focusableInTouchMode="false"
+        android:gravity="center_horizontal"
+        android:layout_margin="5dp">
+
+        <TextView
+            android:text="Place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:textColor="#1235d6"
+            android:textSize="25dp"
+            android:padding="10dp"
+            android:gravity="center" />
+
+        <TextView
+            android:text="Place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:textColor="#03ac56"
+            android:id="@+id/placeText"
+            android:textSize="25dp"
+            android:gravity="center"
+            android:padding="10dp"/>
+
+
+    </TableRow>
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:layout_margin="5dp">
+
+        <TextView
+            android:text="Weather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:textColor="#1235d6"
+            android:textSize="25dp"
+            android:gravity="center"
+            android:padding="10dp"/>
+
+        <TextView
+            android:text="Weather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:textColor="#03ac56"
+            android:id="@+id/weatherText"
+            android:textSize="25dp"
+            android:gravity="center"
+            android:padding="10dp"/>
+
+
+    </TableRow>
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:layout_margin="5dp">
+
+        <TextView
+            android:text="Max Temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:textColor="#1235d6"
+            android:textSize="25dp"
+            android:gravity="center"
+            android:padding="10dp"/>
+
+        <TextView
+            android:text="Max Temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:textColor="#03ac56"
+            android:id="@+id/maxTempText"
+            android:textSize="25dp"
+            android:gravity="center"
+            android:padding="10dp"/>
+
+
+    </TableRow>
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:layout_margin="5dp">
+
+        <TextView
+            android:text="Min Temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:textColor="#1235d6"
+            android:textSize="25dp"
+            android:gravity="center"
+            android:padding="10dp"/>
+
+        <TextView
+            android:text="Min Temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:textColor="#03ac56"
+            android:id="@+id/minTempText"
+            android:textSize="25dp"
+            android:gravity="center"
+            android:padding="10dp"/>
+
+
+    </TableRow>
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:layout_margin="5dp"
+        >
+
+        <TextView
+            android:text="Wind Speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:textColor="#1235d6"
+            android:textSize="25dp"
+            android:gravity="center"
+            android:padding="10dp" />
+
+        <TextView
+            android:text="Wind Speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:textColor="#03ac56"
+            android:id="@+id/windSpeedText"
+            android:textSize="25dp"
+            android:gravity="center"
+            android:padding="10dp" />
+
+
+    </TableRow>
+
+
+</TableLayout>
+
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:src="@drawable/abc_ic_commit_search_api_mtrl_alpha" />
+
+
+</android.support.design.widget.CoordinatorLayout>

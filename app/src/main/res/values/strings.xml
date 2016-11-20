@@ -6,8 +6,8 @@
     <string name="action_location">Location</string>
     <string name="action_places">Places</string>
 
-    <string name="api_key">"https://newsapi.org_Key"</string>
-    <string name="weather_api_key">"http://api.openweathermap.org_key"</string>
+    <string name="api_key">497521fbc89e471bbd6d438d8279614c</string>
+    <string name="weather_api_key">d848ebcdc8db0f94f0f56d659168d7c9</string>
     <string name="lat">35</string>
     <string name="lon">139</string>
 
@@ -15,4 +15,10 @@
     <string name="title_activity_detail_news">DetailNewsActivity</string>
     <string name="title_activity_position">PositionActivity</string>
     <string name="title_activity_places">PlacesActivity</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_articles_list">ArticlesListActivity</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="title_activity_weaher">WeaherActivity</string>
+    <string name="title_activity_weather">WeatherActivity</string>
 </resources>

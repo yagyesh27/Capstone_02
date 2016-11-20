@@ -4,23 +4,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,51 +29,62 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class DetailActivity extends AppCompatActivity {
+/**
+ * A placeholder fragment containing a simple view.
+ */
+public class ArticlesListActivityFragment extends Fragment {
 
+    View rootView;
     static String JSONstring;
     static String titles[];
     static String urls[];
     static String desc[];
     static String imageUrlStr[];
+
+    public ArticlesListActivityFragment() {
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
-        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.fragment_articles_list, container, false);
+
+        rootView.findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getActivity(), MainActivity.class));
 
             }
         });
-        Intent intent = getIntent();
+        Intent intent = getActivity().getIntent();
         String srcId = intent.getStringExtra("srcId");
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-        new Fetchdata().execute(srcId);
-    }
+        Toolbar myToolbar = (Toolbar) rootView.findViewById(R.id.my_toolbar);
+        //setSupportActionBar(myToolbar);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_detail, menu);
-        return true;
-    }
+        Bundle extras =  getArguments();
+        if (extras != null) {
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+            srcId = extras.getString("srcId");
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+            if(srcId == null){
+
+                Toast.makeText(getActivity(), "No Data Available", Toast.LENGTH_LONG).show();
+
+            }else{
+                new Fetchdata().execute(srcId);
+            }
+
         }
 
-        return super.onOptionsItemSelected(item);
+           /* if(srcId == null){
+
+            Toast.makeText(getActivity(), "No Data Available", Toast.LENGTH_LONG).show();
+
+        }else{
+            new Fetchdata().execute(srcId);
+        }*/
+
+        return rootView;
     }
 
     public class Fetchdata extends AsyncTask<String, Void, ArrayList> {
@@ -90,7 +96,7 @@ public class DetailActivity extends AppCompatActivity {
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
 
-            Log.d("srcId_Detail",params[0]);
+            Log.d("srcId_Detail", params[0]);
             String srcId = params[0];
 
             // Will contain the raw JSON response as a string.
@@ -99,7 +105,7 @@ public class DetailActivity extends AppCompatActivity {
             try {
 
                 String baseurl = "https://newsapi.org/v1/articles?";//https://newsapi.org/v1/articles?source=the-next-web&sortBy=latest&apiKey={API_KEY}
-               //String sort_param = params[0];
+
 
                 Uri builturi = Uri.parse(baseurl).buildUpon()
                         .appendQueryParameter("source",srcId)
@@ -132,11 +138,11 @@ public class DetailActivity extends AppCompatActivity {
                     return null;
                 }
                 dataJsonStr = buffer.toString();
-                DetailActivity.JSONstring = dataJsonStr;
-                Log.d("Jsondata1", dataJsonStr);
-                Log.d("Jsondata2", DetailActivity.JSONstring);
+                ArticlesListActivityFragment.JSONstring = dataJsonStr;
+                Log.d("Jsondata1thrs", dataJsonStr);
+                Log.d("Jsondata2shtr", ArticlesListActivityFragment.JSONstring);
             } catch (IOException e) {
-                Log.e("DetailActivity", "Error ", e);
+                Log.e("ArtListActFragment", "Error ", e);
 
                 return null;
             } finally {
@@ -164,10 +170,7 @@ public class DetailActivity extends AppCompatActivity {
                 String[] desc = new String[articles.length()];
                 String[] imageUrlStr = new String[articles.length()];
                 Log.d("Jsondata", ".length()<");
-                /*String[] title = new String[movie.length()];
-                String[] release_date = new String[movie.length()];
-                String[] vote_avg = new String[movie.length()];
-                String[] plot_synopsis = new String[movie.length()];*/
+
 
                 JSONObject ob;
                 for (int i = 0; i < articles.length(); i++) {
@@ -194,10 +197,10 @@ public class DetailActivity extends AppCompatActivity {
                     Log.d("ArticlePoster", imageUrlStr[i]);
                 }
 
-                DetailActivity.titles = titles;
-                DetailActivity.urls = urls;
-                DetailActivity.desc = desc;
-                DetailActivity.imageUrlStr = imageUrlStr;
+                ArticlesListActivityFragment.titles = titles;
+                ArticlesListActivityFragment.urls = urls;
+                ArticlesListActivityFragment.desc = desc;
+                ArticlesListActivityFragment.imageUrlStr = imageUrlStr;
 
 
 
@@ -213,42 +216,31 @@ public class DetailActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList list) {
             super.onPostExecute(list);
-            /*titles = (String[]) list.get(0);
-            title = (String[]) list.get(1);
-            release_date = (String[]) list.get(2);
-            vote_avg = (String[]) list.get(3);
-            plot_synopsis = (String[]) list.get(4);*/
 
 
-                DetailListAdap adapter = new DetailListAdap(DetailActivity.this, titles,urls);
-                ListView listview = (ListView) findViewById(R.id.listview);
-                listview.setAdapter(adapter);
+
+            DetailListAdap adapter = new DetailListAdap(getActivity(), titles,urls);
+            ListView listview = (ListView) rootView.findViewById(R.id.listview);
+            listview.setAdapter(adapter);
 
 
-                listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Log.d("Clicked", "Clicked");
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Log.d("Clicked", "Clicked");
 
-                        Intent browserIntent = new Intent(DetailActivity.this,DetailNewsActivity.class);
-                        browserIntent.putExtra("imgUrl",imageUrlStr[position]);
-                        browserIntent.putExtra("title",titles[position]);
-                        browserIntent.putExtra("description",desc[position]);
-                        startActivity(browserIntent);
+                    Intent browserIntent = new Intent(getActivity(),DetailNewsActivity.class);
+                    browserIntent.putExtra("imgUrl",imageUrlStr[position]);
+                    browserIntent.putExtra("title",titles[position]);
+                    browserIntent.putExtra("description",desc[position]);
+                    startActivity(browserIntent);
 
-                        /*Intent i = new Intent(getActivity(), DetailActivity.class);
-                        i.putExtra("poster_url", posters[position]);
-                        i.putExtra("title", title[position]);
-                        i.putExtra("release_date", release_date[position]);
-                        i.putExtra("vote_avg", vote_avg[position]);
-                        i.putExtra("plot_synopsis", plot_synopsis[position]);
 
-                        startActivity(i);*/
 
-                    }
-                });
+                }
+            });
 
 
 
@@ -289,16 +281,13 @@ public class DetailActivity extends AppCompatActivity {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             if (convertView == null) {
 
-                //grid = new View(mContext);
+
                 list = inflater.inflate(R.layout.detail_list_item,null);
                 TextView textview = (TextView)list.findViewById(R.id.article_title_text);
                 textview.setText(titles[i]);
                 textview.setContentDescription(titles[i]);
 
-                /*ImageView imageView = (ImageView)grid.findViewById(R.id.imageViewGrid);
-                imageView.setAdjustViewBounds(true);*/
 
-                //Picasso.with(mContext).load(artImageUrls[i]).into(imageView);
 
 
             } else {

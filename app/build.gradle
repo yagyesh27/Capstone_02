@@ -17,6 +17,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets { main { java.srcDirs = ['src/main/java', 'src/DatabaseHandler', 'src/data'] } }
 }
 
 dependencies {
@@ -27,7 +28,6 @@ dependencies {
     compile "com.android.support:recyclerview-v7:24.2.1"
     compile 'com.google.android.gms:play-services-location:9.2.0'
     compile 'com.google.android.gms:play-services-places:9.2.0'
-
 
 
 }
