@@ -50,7 +50,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, LoaderManager.LoaderCallbacks<ArrayList<ArticleSourceImage>> {
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener/*, LoaderManager.LoaderCallbacks<ArrayList<ArticleSourceImage>>*/,LoaderManager.LoaderCallbacks<Cursor> {
 
     static String JSONstring;
     String imageUrl1,imageUrl2,imageUrl3,imageUrl4,imageUrl5,imageUrl6;
@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements
     String[] artImageUrls = {"", "", "", "", "", ""};
     Intent intent = null;
     GridImgViewAdap adapter;
+    private static final int URL_LOADER = 0;
     public GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
     private static final String[] INITIAL_PERMS={
@@ -157,6 +158,8 @@ public class MainActivity extends AppCompatActivity implements
 
         mGoogleApiClient.connect();
 
+        getLoaderManager().initLoader(URL_LOADER, null, MainActivity.this);
+
         //new FetchWeatherdata().execute("weather");
         //new Fetchdata().execute("Thumbnail");
 
@@ -248,18 +251,28 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-    @Override
+    /*@Override
     public Loader<ArrayList<ArticleSourceImage>> onCreateLoader(int id, Bundle args) {
         return new MyContentLoader(MainActivity.this);
+    }*/
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
     }
 
 
-    @Override
+    /*@Override
     public void onLoadFinished(Loader<ArrayList<ArticleSourceImage>> loader, ArrayList<ArticleSourceImage> data) {
 
         adapter.setArticleSourceImages(data);
 
-    }
+    }*/
 
     @Override
     public void onLoaderReset(Loader loader) {
@@ -746,11 +759,13 @@ public class MainActivity extends AppCompatActivity implements
 
                     Log.d("DB return", c.getString(c.getColumnIndex( ArticleSourceImage.COL_SOURCE)) +
                             ", " + c.getString(c.getColumnIndex( ArticleSourceImage.COL_ART_IMG_URL)));*/
-                    intent.putExtra("srcId",imageUrls[i]);
+                    intent.putExtra("srcId", imageUrls[i]);
                     startActivity(intent);
                 }
             });
 
+
+            //getLoaderManager().initLoader(URL_LOADER, null, this);
 
 
 
