@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by HP PC on 18-11-2016.
  */
-public class MyContentLoader extends android.support.v4.content.AsyncTaskLoader{
+public class MyContentLoader extends AsyncTaskLoader{
     Context context;
     List list =  new ArrayList();
     public MyContentLoader(Context context) {
@@ -40,10 +40,11 @@ public class MyContentLoader extends android.support.v4.content.AsyncTaskLoader{
 
         if (c.moveToFirst()) {
             do{
-                list.add(new ArticleSourceImage(c.getString(c.getColumnIndex(ArticleSourceImage.COL_SOURCE)),c.getString(c.getColumnIndex(ArticleSourceImage.COL_ART_IMG_URL))));
+                list.add(new ArticleSourceImage(c.getString(c.getColumnIndex(ArticleSourceImage.COL_SOURCE)),c.getString(c.getColumnIndex(ArticleSourceImage.COL_ART_IMG_URL)),c.getString(c.getColumnIndex(ArticleSourceImage.COL_ART_TITLE))));
                 Log.d("Loader",
                         c.getString(c.getColumnIndex(ArticleSourceImage.COL_SOURCE)) +
-                                ", " + c.getString(c.getColumnIndex(ArticleSourceImage.COL_ART_IMG_URL)));
+                                ", " + c.getString(c.getColumnIndex(ArticleSourceImage.COL_ART_IMG_URL))+
+                        ", " + c.getString(c.getColumnIndex(ArticleSourceImage.COL_ART_TITLE)));
             } while (c.moveToNext());
         }
 

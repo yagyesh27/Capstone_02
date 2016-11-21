@@ -1,15 +1,19 @@
 package com.mfusion.mycoordinatorapplicationtest;
 
 import android.Manifest;
+import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.CursorLoader;
 import android.content.Intent;
 import android.database.Cursor;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.LoaderManager;
+/*import android.support.v4.app.LoaderManager;*/
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -56,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements
     String imageUrl1,imageUrl2,imageUrl3,imageUrl4,imageUrl5,imageUrl6;
     String[] imageUrls = {"", "", "", "", "", ""};
     String[] artImageUrls = {"", "", "", "", "", ""};
+    String[] artTitles = {"", "", "", "", "", ""};
     Intent intent = null;
     GridImgViewAdap adapter;
     private static final int URL_LOADER = 0;
@@ -158,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements
 
         mGoogleApiClient.connect();
 
-        getLoaderManager().initLoader(URL_LOADER, null, MainActivity.this);
+        getLoaderManager().initLoader(URL_LOADER, null, this);
 
         //new FetchWeatherdata().execute("weather");
         //new Fetchdata().execute("Thumbnail");
@@ -235,14 +240,30 @@ public class MainActivity extends AppCompatActivity implements
         longitude = Double.toString(location.getLongitude());
 
 
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+
+
 
        // Toast.makeText(MainActivity.this, "Latitude = " + (Double.toString(location.getLatitude())) + "Longitude = " + (Double.toString(location.getLongitude())), Toast.LENGTH_LONG).show();
-        new FetchWeatherdata().execute("weather");
+      if(activeNetworkInfo.isConnected()) {
+
+          Log.d("Location","Location dvdvdb" + activeNetworkInfo.isConnected());
+
+          new FetchWeatherdata().execute("weather");
         /*new Fetchdata().execute("Thumbnail");*/
-        if(!country.equals(countryPrev)){
-            new Fetchdata().execute("Thumbnail");
-            countryPrev = country;
-        }
+          if (!country.equals(countryPrev)) {
+
+
+
+              new Fetchdata().execute("Thumbnail");
+              countryPrev = country;
+          }
+
+      }else{
+          Toast.makeText(MainActivity.this,"No Internet Connection",Toast.LENGTH_LONG).show();
+      }
 
     }
 
@@ -251,20 +272,52 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
+    @Override
+    public android.content.Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        return new CursorLoader(this,
+                Uri.parse("content://com.mfusion.mycoordinatorapplicationtest.data.ArticleSourceImageProvider")
+                , new String[]{"source", "artImgUrl", "artTitle" }, null, null, null);
+        /*return null;*/
+    }
+
+    @Override
+    public void onLoadFinished(android.content.Loader<Cursor> loader, Cursor cursor) {
+
+        ArrayList list =  new ArrayList();
+
+
+
+
+
+
+        if (cursor.moveToFirst()) {
+            do{
+                Log.d("Cursor", "Corsor main act");
+                list.add(new ArticleSourceImage(cursor.getString(cursor.getColumnIndex(ArticleSourceImage.COL_SOURCE)),cursor.getString(cursor.getColumnIndex(ArticleSourceImage.COL_ART_IMG_URL)),cursor.getString(cursor.getColumnIndex(ArticleSourceImage.COL_ART_TITLE))));
+                Log.d("Loader",
+                        cursor.getString(cursor.getColumnIndex(ArticleSourceImage.COL_SOURCE)) +
+                                ", " + cursor.getString(cursor.getColumnIndex(ArticleSourceImage.COL_ART_IMG_URL))+
+                                ", " + cursor.getString(cursor.getColumnIndex(ArticleSourceImage.COL_ART_IMG_URL)));
+            } while (cursor.moveToNext());
+        }
+
+
+
+
+
+        adapter.setArticleSourceImages(list);
+    }
+
+    @Override
+    public void onLoaderReset(android.content.Loader<Cursor> loader) {
+        adapter.setArticleSourceImages(new ArrayList<ArticleSourceImage>());
+    }
+
     /*@Override
     public Loader<ArrayList<ArticleSourceImage>> onCreateLoader(int id, Bundle args) {
         return new MyContentLoader(MainActivity.this);
     }*/
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        return null;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
-    }
 
 
     /*@Override
@@ -274,12 +327,7 @@ public class MainActivity extends AppCompatActivity implements
 
     }*/
 
-    @Override
-    public void onLoaderReset(Loader loader) {
 
-        adapter.setArticleSourceImages(new ArrayList<ArticleSourceImage>());
-
-    }
 
 
     public class Fetchdata extends AsyncTask<String, Void, ArrayList> {
@@ -366,22 +414,28 @@ public class MainActivity extends AppCompatActivity implements
                 Log.d("Arr_imageurl","afterFirst");
                 Log.d("Arr_imageurl","strt");
                 artImageUrls[0] = getImgArtUrl(imageUrls[0]);
+                artTitles[0] = getArtTitle(imageUrls[0]);
                 Log.d("Arr_imageurl","afterFirst");
 
                 imageUrls[1] = getImgUrl(url2);
                 artImageUrls[1] = getImgArtUrl(imageUrls[1]);
+                artTitles[1] = getArtTitle(imageUrls[1]);
 
                 imageUrls[2] = getImgUrl(url3);
                 artImageUrls[2] = getImgArtUrl(imageUrls[2]);
+                artTitles[2] = getArtTitle(imageUrls[2]);
 
                 imageUrls[3] = getImgUrl(url4);
                 artImageUrls[3] = getImgArtUrl(imageUrls[3]);
+                artTitles[3] = getArtTitle(imageUrls[3]);
 
                 imageUrls[4] = getImgUrl(url5);
                 artImageUrls[4] = getImgArtUrl(imageUrls[4]);
+                artTitles[4] = getArtTitle(imageUrls[4]);
 
                 imageUrls[5] = getImgUrl(url6);
                 artImageUrls[5] = getImgArtUrl(imageUrls[5]);
+                artTitles[5] = getArtTitle(imageUrls[5]);
 
                 for(int i=0; i<6 ; i++){
 
@@ -391,6 +445,9 @@ public class MainActivity extends AppCompatActivity implements
 
                     values.put(ArticleSourceImage.COL_ART_IMG_URL,artImageUrls[i]
                            );
+
+                    values.put(ArticleSourceImage.COL_ART_TITLE,artTitles[i]
+                    );
 
                     Uri uri = getContentResolver().insert(
                             ArticleSourceImageProvider.URI_ARTICLESOURCES, values);
@@ -702,6 +759,102 @@ public class MainActivity extends AppCompatActivity implements
 
         }
 
+        public String getArtTitle(String srcId){
+            String ArtTitle = "";
+            String dataJsonStrImg;
+            HttpURLConnection urlConnection = null;
+            BufferedReader reader = null;
+            //String sourceId = "";
+
+            try{
+                String baseurl = "https://newsapi.org/v1/articles?";//https://newsapi.org/v1/articles?source=the-next-web&sortBy=latest&apiKey={API_KEY}
+                //String sort_param = params[0];
+
+                Uri builturi = Uri.parse(baseurl).buildUpon()
+                        .appendQueryParameter("source",srcId)
+                        .appendQueryParameter("sortBy", "top")
+                        .appendQueryParameter("apiKey", getString(R.string.api_key))
+                        .build();
+                URL url = new URL(builturi.toString());
+
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
+
+
+
+                InputStream inputStream = urlConnection.getInputStream();
+                StringBuffer buffer = new StringBuffer();
+
+                reader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+
+                    buffer.append(line + "\n");
+                }
+
+                if (buffer.length() == 0) {
+
+                    return null;
+                }
+                dataJsonStrImg = buffer.toString();
+                Log.d("Jsondata1", dataJsonStrImg);
+                // Log.d("Jsondata2", MainActivity.JSONstring);
+            } catch (IOException e) {
+                Log.e("MainActivity", "Error ", e);
+
+                return null;
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (final IOException e) {
+                        Log.e("PlaceholderFragment", "Error closing stream", e);
+                    }
+                }
+            }
+
+            ArrayList a = new ArrayList();
+            try {
+                Log.d("Jsondata", ".JSONObject>");
+                JSONObject articleJson = new JSONObject(dataJsonStrImg);
+                Log.d("Jsondata", ".JSONObject<");
+                JSONArray articles = articleJson.getJSONArray("articles");
+                Log.d("Jsondata", ".length()>");
+                String[] titles = new String[articles.length()];
+                Log.d("Jsondata", ".length()<");
+
+                JSONObject ob;
+                for (int i = 0; i < articles.length(); i++) {
+                    ob = articles.getJSONObject(i);
+                    //JSONObject urls = ob.getJSONObject("urlsToLogos");
+
+                    if(i==0){
+
+                        ArtTitle = ob.getString("title");
+                        Log.d("UrlStrArt",ArtTitle);
+                    }
+
+                    a.add(0, titles);
+
+
+
+                    //Log.d("Articles", titles[i]);
+                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return ArtTitle;
+
+        }
+
 
         @Override
         protected void onPostExecute(ArrayList list) {
@@ -819,25 +972,24 @@ public class MainActivity extends AppCompatActivity implements
         protected ArrayList doInBackground(String[] params) {
 
 
-
-
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
 
             // Will contain the raw JSON response as a string.
             String dataJsonStr = null;
 
-            if(latitude.length() == 0){
+            if (latitude.length() == 0) {
                 latitude = getString(R.string.lat);
                 longitude = getString(R.string.lon);
             }
 
+
             try {
 
-                String baseurl ="http://api.openweathermap.org/data/2.5/weather?";
+                String baseurl = "http://api.openweathermap.org/data/2.5/weather?";
                 String sort_param = params[0];
 
-                Uri builturi= Uri.parse(baseurl).buildUpon()
+                Uri builturi = Uri.parse(baseurl).buildUpon()
                         .appendQueryParameter("lat", latitude)
                         .appendQueryParameter("lon", longitude)
                         .appendQueryParameter("appid", getString(R.string.weather_api_key))
@@ -887,6 +1039,8 @@ public class MainActivity extends AppCompatActivity implements
                     }
                 }
             }
+
+
 
             ArrayList a = new ArrayList();
             try {
@@ -1104,6 +1258,11 @@ public class MainActivity extends AppCompatActivity implements
 
             return grid;
         }
+
+        /*public void setArticleSourceImages(Cursor cursor) {
+            artSource.addAll(data);
+            notifyDataSetChanged();
+        }*/
 
         public void setArticleSourceImages(ArrayList<ArticleSourceImage> data) {
             artSource.addAll(data);

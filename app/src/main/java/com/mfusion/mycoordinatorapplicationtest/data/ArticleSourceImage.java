@@ -20,11 +20,12 @@ public class ArticleSourceImage {
     // These fields can be anything you want.
     public static final String COL_SOURCE = "source";
     public static final String COL_ART_IMG_URL = "artImgUrl";
+    public static final String COL_ART_TITLE = "artTitle";
 
 
 
     // For database projection so order is consistent
-    public static final String[] FIELDS = { COL_SOURCE, COL_ART_IMG_URL };
+    public static final String[] FIELDS = { COL_SOURCE, COL_ART_IMG_URL, COL_ART_TITLE };
 
     /*
      * The SQL code that creates a Table for storing Persons in.
@@ -36,22 +37,26 @@ public class ArticleSourceImage {
 
                     + COL_SOURCE + " TEXT NOT NULL DEFAULT '',"
                     + COL_ART_IMG_URL + " TEXT NOT NULL DEFAULT ''"
-                    + ")";
+                    + COL_ART_TITLE + " TEXT NOT NULL DEFAULT ''"
+                    +")";
 
     // Fields corresponding to database columns
 
 
     public String source = "";
     public String artImgUrl = "";
+    public String artTitle = "";
+
 
 
     /**
      * No need to do anything, fields are already set to default values above
      */
-    public ArticleSourceImage(String source , String artImgUrl) {
+    public ArticleSourceImage(String source , String artImgUrl , String artTitle) {
 
         this.source = source;
         this.artImgUrl = artImgUrl;
+        this.artTitle = artTitle;
 
     }
 
@@ -63,6 +68,7 @@ public class ArticleSourceImage {
 
         this.source = cursor.getString(0);
         this.artImgUrl = cursor.getString(1);
+        this.artTitle = cursor.getString(2);
 
     }
 
@@ -75,6 +81,7 @@ public class ArticleSourceImage {
         // Note that ID is NOT included here
         values.put(COL_SOURCE, source);
         values.put(COL_ART_IMG_URL, artImgUrl);
+        values.put(COL_ART_TITLE, artTitle);
 
 
         return values;
