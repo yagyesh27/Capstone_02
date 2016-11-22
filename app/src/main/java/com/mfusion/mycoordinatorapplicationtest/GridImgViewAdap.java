@@ -26,6 +26,7 @@ public class GridImgViewAdap extends BaseAdapter {
     public GridImgViewAdap(Context context, ArrayList<ArticleSourceImage> artSource) {
         this.artSource = artSource;
         inflater = LayoutInflater.from(context);
+        this.mContext = context;
     }
 
     @Override

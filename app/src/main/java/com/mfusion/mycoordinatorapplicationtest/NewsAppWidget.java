@@ -28,7 +28,7 @@ public class NewsAppWidget extends AppWidgetProvider {
             int ind = 0;
 
 
-            while (cursor.moveToNext() ) {
+            while (cursor.moveToNext() && ind<6 ) {
 
                 cursor.getString(cursor.getColumnIndex( ArticleSourceImage.COL_SOURCE));
                 titles[ind] = cursor.getString(cursor.getColumnIndex( ArticleSourceImage.COL_ART_TITLE));

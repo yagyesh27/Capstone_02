@@ -7,11 +7,22 @@
     tools:context="com.mfusion.mycoordinatorapplicationtest.PlacesActivityFragment">
 
     <TextView
-        android:text="@string/action_places" android:layout_width="wrap_content"
+        android:text="@string/action_places"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView1111"
+        android:textSize="20dp"
+        android:textColor="#3a59fe"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif"/>
+    <TextView
+        android:text="@string/action_places"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView11"
+        android:layout_below="@+id/textView1111"
         android:textSize="15dp"
-        android:textColor="#3a59fe"
+        android:textColor="#031437"
         android:textStyle="bold"
         android:fontFamily="sans-serif"/>
 
@@ -19,12 +30,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/txt_desc"
-        android:id="@+id/textView22"
+        android:id="@+id/textView2222"
         android:layout_below="@+id/textView11"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textSize="15dp"
+        android:textSize="20dp"
         android:textColor="#3a59fe"
+        android:textStyle="bold"
+        android:fontFamily="sans-serif"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_desc"
+        android:id="@+id/textView22"
+        android:layout_below="@+id/textView2222"
+
+        android:textSize="15dp"
+        android:textColor="#031437"
         android:textStyle="bold"
         android:fontFamily="sans-serif"/>
 

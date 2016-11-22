@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements
     String[] artTitles = {"", "", "", "", "", ""};
     Intent intent = null;
     GridImgViewAdap adapter;
+    ArrayList<ArticleSourceImage> listAdap;
     GridView grid;
     private static final int URL_LOADER = 0;
     public GoogleApiClient mGoogleApiClient;
@@ -149,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements
 
         getLoaderManager().initLoader(URL_LOADER, null, this);
 
-        adapter = new GridImgViewAdap(MainActivity.this, new ArrayList<ArticleSourceImage>());
+        adapter = new GridImgViewAdap(MainActivity.this, listAdap);
 
 
         //new FetchWeatherdata().execute("weather");
@@ -290,9 +291,11 @@ public class MainActivity extends AppCompatActivity implements
 
 
 
+        listAdap = list;
 
+        adapter.notifyDataSetChanged();
 
-        adapter.setArticleSourceImages(list);
+       // adapter.setArticleSourceImages(list);
     }
 
     @Override
@@ -743,6 +746,7 @@ public class MainActivity extends AppCompatActivity implements
             GridView grid = (GridView) findViewById(R.id.gridView);
             grid.setAdapter(adapter);*/
 
+            adapter = new GridImgViewAdap(MainActivity.this, listAdap);
             grid = (GridView) findViewById(R.id.gridView);
             grid.setAdapter(adapter);
 
