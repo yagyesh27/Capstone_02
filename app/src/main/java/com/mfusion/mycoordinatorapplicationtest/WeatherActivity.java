@@ -24,12 +24,18 @@ public class WeatherActivity extends AppCompatActivity {
         DecimalFormat precision = new DecimalFormat("0.00");
 
         ((ImageView)findViewById(R.id.weatherImage)).setImageResource(getIconResourceForWeatherCondition(i.getIntExtra("weatherId", 800)));
-                ((TextView) findViewById(R.id.weatherText)).setText(i.getStringExtra("weatherDesc"));
+        ((TextView) findViewById(R.id.weatherText)).setText(i.getStringExtra("weatherDesc"));
+        ((ImageView)findViewById(R.id.weatherImage)).setContentDescription(i.getStringExtra("weatherDesc"));
+        ((ImageView)findViewById(R.id.weatherText)).setContentDescription(i.getStringExtra("weatherDesc"));
         ((TextView)findViewById(R.id.placeText)).setText(i.getStringExtra("place"));
+        ((TextView)findViewById(R.id.placeText)).setContentDescription(i.getStringExtra("place"));
         //((TextView)findViewById(R.id.maxTempText)).setText( Double.toString(i.getDoubleExtra("maxTemp",0.00)) + "°C");
-        ((TextView)findViewById(R.id.maxTempText)).setText( precision.format(i.getDoubleExtra("maxTemp",0.00)) + "°C");
+        ((TextView)findViewById(R.id.maxTempText)).setText(precision.format(i.getDoubleExtra("maxTemp",0.00)) + "°C");
+        ((TextView)findViewById(R.id.maxTempText)).setContentDescription(precision.format(i.getDoubleExtra("maxTemp", 0.00)) + "°C");
         ((TextView)findViewById(R.id.minTempText)).setText(precision.format(i.getDoubleExtra("minTemp", 0.00)) + "°C");
-        ((TextView)findViewById(R.id.windSpeedText)).setText(precision.format(i.getDoubleExtra("speed",0.00)) + " mps");
+        ((TextView)findViewById(R.id.minTempText)).setContentDescription(precision.format(i.getDoubleExtra("minTemp", 0.00)) + "°C");
+        ((TextView) findViewById(R.id.windSpeedText)).setText(precision.format(i.getDoubleExtra("speed", 0.00)) + " mps");
+        ((TextView) findViewById(R.id.windSpeedText)).setContentDescription(precision.format(i.getDoubleExtra("speed", 0.00)) + " mps");
     }
 
     @Override

@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'MyAndroidKey'
             keyPassword 'passandroid'
-            storeFile file('C:/Users/HP PC/Desktop/Sunshine/GoUbiquitous_Repo/MyCoordinatorApplicationTest/android.jks')
+            storeFile file('$rootDir/android.jks')//C:/Users/HP PC/Desktop/Sunshine/GoUbiquitous_Repo/MyCoordinatorApplicationTest
             storePassword 'androidpass'
         }
     }

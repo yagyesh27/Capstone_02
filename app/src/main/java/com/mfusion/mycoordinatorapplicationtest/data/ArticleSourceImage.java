@@ -36,7 +36,7 @@ public class ArticleSourceImage {
             "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + "("
 
                     + COL_SOURCE + " TEXT NOT NULL DEFAULT '',"
-                    + COL_ART_IMG_URL + " TEXT NOT NULL DEFAULT ''"
+                    + COL_ART_IMG_URL + " TEXT NOT NULL DEFAULT '',"
                     + COL_ART_TITLE + " TEXT NOT NULL DEFAULT ''"
                     +")";
 

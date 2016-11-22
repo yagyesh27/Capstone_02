@@ -43,11 +43,17 @@ public class NewsAppWidget extends AppWidgetProvider {
 
             try {
                 mView.setTextViewText(R.id.textViewW1, titles[0]);
+                mView.setContentDescription(R.id.textViewW1, titles[0]);
                 mView.setTextViewText(R.id.textViewW2, titles[1]);
+                mView.setContentDescription(R.id.textViewW2, titles[1]);
                 mView.setTextViewText(R.id.textViewW3, titles[2]);
+                mView.setContentDescription(R.id.textViewW3, titles[2]);
                 mView.setTextViewText(R.id.textViewW4, titles[3]);
+                mView.setContentDescription(R.id.textViewW4, titles[3]);
                 mView.setTextViewText(R.id.textViewW5, titles[4]);
+                mView.setContentDescription(R.id.textViewW5, titles[4]);
                 mView.setTextViewText(R.id.textViewW6, titles[5]);
+                mView.setContentDescription(R.id.textViewW6, titles[5]);
             }catch (Exception e){
                 Log.e("widget set data", e.toString());
             }
