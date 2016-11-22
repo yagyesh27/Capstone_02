@@ -7,6 +7,6 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_places" android:title="@string/action_places"
         android:orderInCategory="100" app:showAsAction="never" />
-    <item android:id="@+id/action_home" android:title="Home"
-        android:orderInCategory="100" app:showAsAction="never" />
+    <!--<item android:id="@+id/action_home" android:title="Home"
+        android:orderInCategory="100" app:showAsAction="never" />-->
 </menu>

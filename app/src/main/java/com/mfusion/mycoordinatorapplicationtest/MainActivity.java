@@ -197,10 +197,10 @@ public class MainActivity extends AppCompatActivity implements
             startActivity(new Intent(getApplicationContext(), PlacesActivity.class));
             return true;
         }
-        if (id == R.id.action_home) {
+        /*if (id == R.id.action_home) {
             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -1204,7 +1204,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
 
-
+/*
     public class GridImgViewAdap extends BaseAdapter {
         private Context mContext;
         private LayoutInflater inflater;
@@ -1259,16 +1259,16 @@ public class MainActivity extends AppCompatActivity implements
             return grid;
         }
 
-        /*public void setArticleSourceImages(Cursor cursor) {
+        *//*public void setArticleSourceImages(Cursor cursor) {
             artSource.addAll(data);
             notifyDataSetChanged();
-        }*/
+        }*//*
 
         public void setArticleSourceImages(ArrayList<ArticleSourceImage> data) {
             artSource.addAll(data);
             notifyDataSetChanged();
         }
 
-    }
+    }*/
 
 }

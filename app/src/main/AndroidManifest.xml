@@ -57,12 +57,6 @@
             android:enabled="true"
             android:exported="false" >
         </provider>
-        <provider
-            android:name=".data.MyContentProvider"
-            android:authorities="com.example.provider"
-            android:enabled="true"
-            android:exported="true" >
-        </provider>
 
         <receiver android:name=".NewsAppWidget" >
             <intent-filter>
