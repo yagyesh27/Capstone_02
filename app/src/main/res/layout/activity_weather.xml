@@ -14,13 +14,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         android:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
- <!--       <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/weather_img"
-            android:layout_gravity="end"
-            android:layout_marginRight="0dp"
-            android:src="@drawable/abc_scrubber_control_to_pressed_mtrl_000" /-->>
+
 
     </android.support.v7.widget.Toolbar>
 
@@ -41,7 +35,7 @@ android:layout_marginTop="70dp"
         android:gravity="center_horizontal">
 
         <ImageView
-            android:contentDescription="Weather"
+            android:contentDescription="@string/txt_weather"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:id="@+id/weatherImage"
@@ -57,8 +51,8 @@ android:layout_marginTop="70dp"
         android:layout_margin="5dp">
 
         <TextView
-            android:contentDescription="Place"
-            android:text="Place"
+            android:contentDescription="@string/art_place"
+            android:text="@string/art_place"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="0"
@@ -68,8 +62,8 @@ android:layout_marginTop="70dp"
             android:gravity="center" />
 
         <TextView
-            android:contentDescription="Place"
-            android:text="Place"
+            android:contentDescription="@string/art_place"
+            android:text="@string/art_place"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="2"
@@ -88,8 +82,8 @@ android:layout_marginTop="70dp"
         android:layout_margin="5dp">
 
         <TextView
-            android:contentDescription="Weather"
-            android:text="Weather"
+            android:contentDescription="@string/txt_weather"
+            android:text="@string/txt_weather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="0"
@@ -99,8 +93,8 @@ android:layout_marginTop="70dp"
             android:padding="10dp"/>
 
         <TextView
-            android:contentDescription="Weather"
-            android:text="Weather"
+            android:contentDescription="@string/txt_weather"
+            android:text="@string/txt_weather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="2"
@@ -120,8 +114,8 @@ android:layout_marginTop="70dp"
         android:layout_margin="5dp">
 
         <TextView
-            android:contentDescription="Max Temperature"
-            android:text="Max Temp"
+            android:contentDescription="@string/mx_tmp"
+            android:text="@string/mx_tmp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="0"
@@ -131,8 +125,8 @@ android:layout_marginTop="70dp"
             android:padding="10dp"/>
 
         <TextView
-            android:contentDescription="Max Temperature"
-            android:text="Max Temp"
+            android:contentDescription="@string/mx_tmp"
+            android:text="@string/mx_tmp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="2"
@@ -151,8 +145,8 @@ android:layout_marginTop="70dp"
         android:layout_margin="5dp">
 
         <TextView
-            android:contentDescription="Min Temperature"
-            android:text="Min Temp"
+            android:contentDescription="@string/mn_tmp"
+            android:text="@string/mn_tmp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="0"
@@ -162,8 +156,8 @@ android:layout_marginTop="70dp"
             android:padding="10dp"/>
 
         <TextView
-            android:contentDescription="Min Temperature"
-            android:text="Min Temp"
+            android:contentDescription="@string/mn_tmp"
+            android:text="@string/mn_tmp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="2"
@@ -183,8 +177,8 @@ android:layout_marginTop="70dp"
         >
 
         <TextView
-            android:contentDescription="Wind Speed"
-            android:text="Wind Speed"
+            android:contentDescription="@string/wnd_spd"
+            android:text="@string/wnd_spd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="0"
@@ -194,8 +188,8 @@ android:layout_marginTop="70dp"
             android:padding="10dp" />
 
         <TextView
-            android:contentDescription="Wind Speed"
-            android:text="Wind Speed"
+            android:contentDescription="@string/wnd_spd"
+            android:text="@string/wnd_spd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="2"

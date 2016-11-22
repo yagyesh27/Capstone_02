@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements
     String[] artTitles = {"", "", "", "", "", ""};
     Intent intent = null;
     GridImgViewAdap adapter;
+    GridView grid;
     private static final int URL_LOADER = 0;
     public GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
@@ -133,24 +134,7 @@ public class MainActivity extends AppCompatActivity implements
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
-        //Tool bar http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=weatherkey
 
-        /*findViewById(R.id.thumbnail1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("inMain","next is intent call");
-
-                startActivity(intent);
-
-                *//*i.putExtra("poster_url", posters[position]);
-                i.putExtra("title", title[position]);
-                i.putExtra("release_date", release_date[position]);
-                i.putExtra("vote_avg", vote_avg[position]);
-                i.putExtra("plot_synopsis", plot_synopsis[position]);
-
-                startActivity(i);*//*
-            }
-        });*/
 
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(MainActivity.this)
@@ -164,6 +148,9 @@ public class MainActivity extends AppCompatActivity implements
         mGoogleApiClient.connect();
 
         getLoaderManager().initLoader(URL_LOADER, null, this);
+
+        adapter = new GridImgViewAdap(MainActivity.this, new ArrayList<ArticleSourceImage>());
+
 
         //new FetchWeatherdata().execute("weather");
         //new Fetchdata().execute("Thumbnail");
@@ -186,9 +173,9 @@ public class MainActivity extends AppCompatActivity implements
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+       /* if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
         if (id == R.id.action_location) {
             startActivity(new Intent(getApplicationContext(), PositionActivity.class));
             return true;
@@ -313,19 +300,6 @@ public class MainActivity extends AppCompatActivity implements
         adapter.setArticleSourceImages(new ArrayList<ArticleSourceImage>());
     }
 
-    /*@Override
-    public Loader<ArrayList<ArticleSourceImage>> onCreateLoader(int id, Bundle args) {
-        return new MyContentLoader(MainActivity.this);
-    }*/
-
-
-
-    /*@Override
-    public void onLoadFinished(Loader<ArrayList<ArticleSourceImage>> loader, ArrayList<ArticleSourceImage> data) {
-
-        adapter.setArticleSourceImages(data);
-
-    }*/
 
 
 
@@ -391,23 +365,7 @@ public class MainActivity extends AppCompatActivity implements
                 URL url5 = new URL(builturi5.toString());
                 URL url6 = new URL(builturi6.toString());
 
-                /*Log.d("Arr_imageurl","strt");
-                imageUrls[0] = getImgUrl(url1);
-                Log.d("Arr_imageurl","afterFirst");
-                imageUrls[1] = getImgUrl(url2);
-                imageUrls[2] = getImgUrl(url3);
-                imageUrls[3] = getImgUrl(url4);
-                imageUrls[4] = getImgUrl(url5);
-                imageUrls[5] = getImgUrl(url6);
 
-                Log.d("Arr_imageurl","strt");
-                artImageUrls[0] = getImgArtUrl(imageUrls[0]);
-                Log.d("Arr_imageurl","afterFirst");
-                artImageUrls[1] = getImgArtUrl(imageUrls[1]);
-                artImageUrls[2] = getImgArtUrl(imageUrls[2]);
-                artImageUrls[3] = getImgArtUrl(imageUrls[3]);
-                artImageUrls[4] = getImgArtUrl(imageUrls[4]);
-                artImageUrls[5] = getImgArtUrl(imageUrls[5]);*/
 
                 Log.d("Arr_imageurl","strt");
                 imageUrls[0] = getImgUrl(url1);
@@ -458,32 +416,7 @@ public class MainActivity extends AppCompatActivity implements
                 }
 
 
-/*
-                ContentValues values = new ContentValues();
-                values.put(ArticleSourceImage.COL_ID,
-                        ((EditText)findViewById(R.id.editText2)).getText().toString());
 
-                values.put(ArticleSourceImage.GRADE,
-                        ((EditText)findViewById(R.id.editText3)).getText().toString());
-
-                Uri uri = getContentResolver().insert(
-                        ArticleSourceImage.CONTENT_URI, values);
-
-                Toast.makeText(getBaseContext(),
-                        uri.toString(), Toast.LENGTH_LONG).show();*////////////////////////////////////////////////////bc
-
-
-
-
-
-
-
-
-
-
-                /*urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();*/
 
             }catch (IOException e){
                 Log.e("MainActivity", "Error ", e);
@@ -491,82 +424,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
 
-                /*InputStream inputStream = urlConnection.getInputStream();
-                StringBuffer buffer = new StringBuffer();
 
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-
-                    buffer.append(line + "\n");
-                }
-
-                if (buffer.length() == 0) {
-
-                    return null;
-                }
-                dataJsonStr = buffer.toString();
-                MainActivity.JSONstring = dataJsonStr;
-                Log.d("Jsondata1", dataJsonStr);
-                Log.d("Jsondata2", MainActivity.JSONstring);
-            } catch (IOException e) {
-                Log.e("MainActivity", "Error ", e);
-
-                return null;
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (final IOException e) {
-                        Log.e("PlaceholderFragment", "Error closing stream", e);
-                    }
-                }
-            }
-
-            ArrayList a = new ArrayList();
-            try {
-                Log.d("Jsondata", ".JSONObject>");
-                JSONObject articleJson = new JSONObject(JSONstring);
-                Log.d("Jsondata", ".JSONObject<");
-                JSONArray articles = articleJson.getJSONArray("articles");
-                Log.d("Jsondata", ".length()>");
-                String[] titles = new String[articles.length()];
-                Log.d("Jsondata", ".length()<");
-                *//*String[] title = new String[movie.length()];
-                String[] release_date = new String[movie.length()];
-                String[] vote_avg = new String[movie.length()];
-                String[] plot_synopsis = new String[movie.length()];*//*
-
-                JSONObject ob;
-                for (int i = 0; i < articles.length(); i++) {
-                    ob = articles.getJSONObject(i);
-                    titles[i] = ob.getString("title");
-                    if(i==0){
-                        imageUrl = ob.getString("urlToImage");
-                    }
-                    *//*title[i] = ob.getString("original_title");
-                    release_date[i] = ob.getString("release_date");
-                    vote_avg[i] = ob.getString("vote_average");
-                    plot_synopsis[i] = ob.getString("overview");*//*
-
-                    a.add(0, titles);
-                    *//*a.add(1, title);
-                    a.add(2, release_date);
-                    a.add(3, vote_avg);
-                    a.add(4, plot_synopsis);*//*
-
-
-                    Log.d("Articles", titles[i]);
-                }
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }*/
 
             ArrayList a = new ArrayList();
 
@@ -859,11 +717,7 @@ public class MainActivity extends AppCompatActivity implements
         @Override
         protected void onPostExecute(ArrayList list) {
             super.onPostExecute(list);
-           /* titles = (String[]) list.get(0);
-            title = (String[]) list.get(1);
-            release_date = (String[]) list.get(2);
-            vote_avg = (String[]) list.get(3);
-            plot_synopsis = (String[]) list.get(4);*/
+
 
 
             String URL = "content://com.mfusion.mycoordinatorapplicationtest.data.ArticleSourceImageProvider";
@@ -875,10 +729,7 @@ public class MainActivity extends AppCompatActivity implements
 
             if (c.moveToFirst()) {
                 do{
-                    /*Toast.makeText(MainActivity.this,
-                            c.getString(c.getColumnIndex( ArticleSourceImage.COL_SOURCE)) +
-                                    ", " + c.getString(c.getColumnIndex( ArticleSourceImage.COL_ART_IMG_URL)),
-                            Toast.LENGTH_SHORT).show();*/
+
 
                     Log.d("DB return", c.getString(c.getColumnIndex(ArticleSourceImage.COL_SOURCE)) +
                             ", " + c.getString(c.getColumnIndex(ArticleSourceImage.COL_ART_IMG_URL)));
@@ -888,75 +739,25 @@ public class MainActivity extends AppCompatActivity implements
 
 
 
-            adapter = new GridImgViewAdap(MainActivity.this, new ArrayList<ArticleSourceImage>());
+            /*adapter = new GridImgViewAdap(MainActivity.this, new ArrayList<ArticleSourceImage>());
             GridView grid = (GridView) findViewById(R.id.gridView);
+            grid.setAdapter(adapter);*/
+
+            grid = (GridView) findViewById(R.id.gridView);
             grid.setAdapter(adapter);
 
             grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     Log.d("Clicked", "Clicked");
-                 /*   String URL = "content://com.mfusion.mycoordinatorapplicationtest.data.ArticleSourceImageProvider";
 
-                    Uri students = Uri.parse(URL);
-                    Cursor c = getContentResolver().query(students, null, null, null, "name");
-
-                    if (c.moveToFirst()) {
-                        do{
-                            Toast.makeText(MainActivity.this,
-                                    c.getString(c.getColumnIndex( ArticleSourceImage.COL_SOURCE)) +
-                                            ", " + c.getString(c.getColumnIndex( ArticleSourceImage.COL_ART_IMG_URL)),
-                                    Toast.LENGTH_SHORT).show();
-                        } while (c.moveToNext());
-                    }
-
-                    Log.d("DB return", c.getString(c.getColumnIndex( ArticleSourceImage.COL_SOURCE)) +
-                            ", " + c.getString(c.getColumnIndex( ArticleSourceImage.COL_ART_IMG_URL)));*/
                     intent.putExtra("srcId", imageUrls[i]);
                     startActivity(intent);
                 }
             });
 
 
-            //getLoaderManager().initLoader(URL_LOADER, null, this);
 
-
-
-            /*Picasso.with(getApplicationContext()).load(imageUrl1).into((ImageView)findViewById(R.id.thumbnail1));
-            Picasso.with(getApplicationContext()).load(imageUrl2).into((ImageView)findViewById(R.id.thumbnail2));
-            Picasso.with(getApplicationContext()).load(imageUrl3).into((ImageView)findViewById(R.id.thumbnail3));
-            Picasso.with(getApplicationContext()).load(imageUrl4).into((ImageView)findViewById(R.id.thumbnail4));
-            Picasso.with(getApplicationContext()).load(imageUrl5).into((ImageView)findViewById(R.id.thumbnail5));
-            Picasso.with(getApplicationContext()).load(imageUrl6).into((ImageView)findViewById(R.id.thumbnail6));*/
-
-            /*if (isAdded()){
-                ListCustomAdapter adapter = new ListCustomAdapter(getActivity(), posters);
-                ListView list = (ListView) rootView.findViewById(R.id.listview);
-                list.setAdapter(adapter);
-
-
-                grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Log.d("Clicked", "Clicked");
-
-
-                        Intent i = new Intent(getActivity(), DetailActivity.class);
-                        i.putExtra("poster_url", posters[position]);
-                        i.putExtra("title", title[position]);
-                        i.putExtra("release_date", release_date[position]);
-                        i.putExtra("vote_avg", vote_avg[position]);
-                        i.putExtra("plot_synopsis", plot_synopsis[position]);
-
-                        startActivity(i);
-
-                    }
-                });
-
-
-            }*/
 
         }
     }
@@ -1068,37 +869,7 @@ public class MainActivity extends AppCompatActivity implements
                 weatherDesc = main;
                 Log.d("weatherId",Integer.toString(weatherId));
 
-      /*          String[] posters = new String[movie.length()];
-                String[] title = new String[movie.length()];
-                String[] release_date = new String[movie.length()];
-                String[] vote_avg = new String[movie.length()];
-                String[] plot_synopsis = new String[movie.length()];
-                String[] movie_id = new String[movie.length()];
-                String[] backdrop_path = new String[movie.length()];
 
-                JSONObject ob;
-                for(int i=0;i<movie.length();i++){
-                    ob = movie.getJSONObject(i);
-                    posters[i] = ob.getString("poster_path") ;
-                    title[i] = ob.getString("original_title") ;
-                    release_date[i] = ob.getString("release_date") ;
-                    vote_avg[i] = ob.getString("vote_average") ;
-                    plot_synopsis[i] = ob.getString("overview") ;
-                    movie_id[i] = ob.getString("id");
-                    backdrop_path[i] = ob.getString("backdrop_path");
-
-                    a.add(0,posters);
-                    a.add(1,title);
-                    a.add(2,release_date);
-                    a.add(3,vote_avg);
-                    a.add(4,plot_synopsis);
-                    a.add(5,movie_id);
-                    a.add(6,backdrop_path);
-
-
-                    Log.d("posters",posters[i]);
-                }
-*/
 
 
             }catch (JSONException e) {
@@ -1119,51 +890,6 @@ public class MainActivity extends AppCompatActivity implements
             ((ImageView)findViewById(R.id.weather_img)).setImageResource(getIconResourceForWeatherCondition(weatherId));
             findViewById(R.id.weather_img).setContentDescription(main);
 
-/*
-            posters = (String[]) list.get(0);
-            title = (String[]) list.get(1);
-            release_date = (String[]) list.get(2);
-            vote_avg = (String[]) list.get(3);
-            plot_synopsis = (String[]) list.get(4);
-            movie_id = (String[]) list.get(5);
-            backdrop_path = (String[]) list.get(6);
-
-
-            if (isAdded()){
-                GridCustomAdapter adapter = new GridCustomAdapter(getActivity(), posters);
-                GridView grid = (GridView) rootView.findViewById(R.id.gridView);
-                grid.setAdapter(adapter);
-
-
-                grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Log.d("Clicked", "Clicked");
-
-
-                        //Intent i = new Intent(getActivity(), DetailActivity.class);
-                        Bundle extras = new Bundle();
-                        extras.putString("poster_url", posters[position]);
-                        extras.putString("title", title[position]);
-                        extras.putString("release_date", release_date[position]);
-                        extras.putString("vote_avg", vote_avg[position]);
-                        extras.putString("plot_synopsis", plot_synopsis[position]);
-                        extras.putString("movie_id", movie_id[position]);
-                        extras.putString("backdrop_path", backdrop_path[position]);
-                        ((Callback)getActivity()).onItemSelected(extras);
-                    */
-/*i.putExtras(extras);
-                    startActivity(i);*//*
-
-
-                    }
-                });
-
-
-            }
-*/
 
 
 
@@ -1203,72 +929,5 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-
-/*
-    public class GridImgViewAdap extends BaseAdapter {
-        private Context mContext;
-        private LayoutInflater inflater;
-
-        private ArrayList<ArticleSourceImage> artSource = new ArrayList<ArticleSourceImage>();
-        Integer[] mThumbnails;
-
-        public GridImgViewAdap(Context context, ArrayList<ArticleSourceImage> artSource) {
-            this.artSource = artSource;
-            inflater = LayoutInflater.from(context);
-        }
-
-        @Override
-        public int getCount() {
-            return 6;
-        }
-
-        @Override
-        public ArticleSourceImage getItem(int i) {
-            return artSource.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-        public GridImgViewAdap(Context c) {
-            mContext = c;
-        }
-
-        @Override
-        public View getView(int i, View convertView, ViewGroup viewGroup) {
-            View grid;
-            ArticleSourceImage source = getItem(i);
-            LayoutInflater inflater = (LayoutInflater) mContext
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            if (convertView == null) {
-
-                //grid = new View(mContext);
-                grid = inflater.inflate(R.layout.grid_cell_home,null);
-                ImageView imageView = (ImageView)grid.findViewById(R.id.imageViewGrid);
-                imageView.setAdjustViewBounds(true);
-
-                Picasso.with(mContext).load(source.artImgUrl).into(imageView);
-
-
-            } else {
-                grid = (View) convertView;
-            }
-
-            return grid;
-        }
-
-        *//*public void setArticleSourceImages(Cursor cursor) {
-            artSource.addAll(data);
-            notifyDataSetChanged();
-        }*//*
-
-        public void setArticleSourceImages(ArrayList<ArticleSourceImage> data) {
-            artSource.addAll(data);
-            notifyDataSetChanged();
-        }
-
-    }*/
 
 }

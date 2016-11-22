@@ -35,7 +35,7 @@
 
 
             <ImageView
-                android:contentDescription="Article Poster"
+                android:contentDescription="@string/art_poster"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imagePoster"
@@ -49,14 +49,14 @@
         </LinearLayout>
 
             <TextView
-                android:contentDescription="Title"
+                android:contentDescription=""
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/title_art"
                 android:textColor="#1d038f"
                 android:textSize="15dp" />
             <TextView
-                android:contentDescription="Descryption"
+                android:contentDescription="@string/txt_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/desc_art"

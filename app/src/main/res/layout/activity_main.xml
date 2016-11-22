@@ -14,7 +14,7 @@
         android:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <ImageView
-            android:contentDescription="Weather"
+            android:contentDescription="@string/txt_weather"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/weather_img"
@@ -45,63 +45,7 @@
         android:stackFromBottom="false"
         android:paddingTop="60dp">
 
-<!--
-        <ImageView
-            android:id="@+id/thumbnail1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="?attr/actionBarSize"
-            android:fitsSystemWindows="true"
-            android:scaleType="fitStart"
-            android:maxHeight="50dp"
-            android:maxWidth="60dp" />
-        <ImageView
-            android:id="@+id/thumbnail2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="?attr/actionBarSize"
-            android:fitsSystemWindows="true"
-            android:scaleType="fitStart"
-            android:maxHeight="50dp"
-            android:maxWidth="60dp" />
-        <ImageView
-            android:id="@+id/thumbnail3"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="?attr/actionBarSize"
-            android:fitsSystemWindows="true"
-            android:scaleType="fitStart"
-            android:maxHeight="50dp"
-            android:maxWidth="60dp" />
-        <ImageView
-            android:id="@+id/thumbnail4"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="?attr/actionBarSize"
-            android:fitsSystemWindows="true"
-            android:scaleType="fitStart"
-            android:maxHeight="10dp"
-            android:maxWidth="10dp"
-            android:adjustViewBounds="true" />
-        <ImageView
-            android:id="@+id/thumbnail5"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="?attr/actionBarSize"
-            android:fitsSystemWindows="true"
-            android:scaleType="fitStart"
-            android:maxHeight="50dp"
-            android:maxWidth="60dp" />
-        <ImageView
-            android:id="@+id/thumbnail6"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingTop="?attr/actionBarSize"
-            android:fitsSystemWindows="true"
-            android:scaleType="fitStart"
-            android:maxHeight="50dp"
-            android:maxWidth="60dp" />
--->
+
 
     </GridView>
 

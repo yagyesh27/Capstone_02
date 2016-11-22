@@ -10,6 +10,18 @@
     <string name="weather_api_key">d848ebcdc8db0f94f0f56d659168d7c9</string>
     <string name="lat">35</string>
     <string name="lon">139</string>
+    <string name="articleTitle">Title</string>
+    <string name="txtLatitude">Latitude</string>
+    <string name="txtLongitude">Longitude</string>
+    <string name="txt_art_img">Article Image</string>
+    <string name="txt_weather">Weather</string>
+    <string name="txt">Text</string>
+    <string name="txt_desc">Description</string>
+    <string name="art_poster">Article Poster</string>
+    <string name="art_place">Place</string>
+    <string name="mx_tmp">Max Temperature</string>
+    <string name="mn_tmp">Min Temperature</string>
+    <string name="wnd_spd">Wind Speed</string>
 
     <string name="title_activity_detail">DetailActivity</string>
     <string name="title_activity_detail_news">DetailNewsActivity</string>

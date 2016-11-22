@@ -30,7 +30,9 @@ public class GridImgViewAdap extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 6;
+
+        //return artSource == null ? 0 : artSource.size();
+        return artSource == null ? 0 : 6;// 6 count size is because of 6 categories of news
     }
 
     @Override
@@ -70,10 +72,7 @@ public class GridImgViewAdap extends BaseAdapter {
         return grid;
     }
 
-        /*public void setArticleSourceImages(Cursor cursor) {
-            artSource.addAll(data);
-            notifyDataSetChanged();
-        }*/
+
 
     public void setArticleSourceImages(ArrayList<ArticleSourceImage> data) {
         artSource.addAll(data);

@@ -26,7 +26,7 @@ public class WeatherActivity extends AppCompatActivity {
         ((ImageView)findViewById(R.id.weatherImage)).setImageResource(getIconResourceForWeatherCondition(i.getIntExtra("weatherId", 800)));
         ((TextView) findViewById(R.id.weatherText)).setText(i.getStringExtra("weatherDesc"));
         ((ImageView)findViewById(R.id.weatherImage)).setContentDescription(i.getStringExtra("weatherDesc"));
-        ((ImageView)findViewById(R.id.weatherText)).setContentDescription(i.getStringExtra("weatherDesc"));
+        ((TextView)findViewById(R.id.weatherText)).setContentDescription(i.getStringExtra("weatherDesc"));
         ((TextView)findViewById(R.id.placeText)).setText(i.getStringExtra("place"));
         ((TextView)findViewById(R.id.placeText)).setContentDescription(i.getStringExtra("place"));
         //((TextView)findViewById(R.id.maxTempText)).setText( Double.toString(i.getDoubleExtra("maxTemp",0.00)) + "°C");
