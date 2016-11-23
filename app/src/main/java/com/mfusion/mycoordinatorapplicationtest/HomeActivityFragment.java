@@ -90,25 +90,7 @@ public class HomeActivityFragment extends Fragment implements
 
         Toolbar myToolbar = (Toolbar) rootView.findViewById(R.id.my_toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar();
-        //setSupportActionBar(myToolbar);
-        //Tool bar http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=weatherkey
 
-        /*findViewById(R.id.thumbnail1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("inMain","next is intent call");
-
-                startActivity(intent);
-
-                *//*i.putExtra("poster_url", posters[position]);
-                i.putExtra("title", title[position]);
-                i.putExtra("release_date", release_date[position]);
-                i.putExtra("vote_avg", vote_avg[position]);
-                i.putExtra("plot_synopsis", plot_synopsis[position]);
-
-                startActivity(i);*//*
-            }
-        });*/
 
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
@@ -121,63 +103,13 @@ public class HomeActivityFragment extends Fragment implements
 
         mGoogleApiClient.connect();
 
-        //new FetchWeatherdata().execute("weather");
-        //new Fetchdata().execute("Thumbnail");
+
         return rootView;
     }
 
 
 
-    /*@Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Hello Snackbar", Snackbar.LENGTH_LONG).show();
-            }
-        });
 
-        intent = new Intent(getApplicationContext(), DetailActivity.class);
-
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
-        //Tool bar http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=weatherkey
-
-        *//*findViewById(R.id.thumbnail1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("inMain","next is intent call");
-
-                startActivity(intent);
-
-                *//**//*i.putExtra("poster_url", posters[position]);
-                i.putExtra("title", title[position]);
-                i.putExtra("release_date", release_date[position]);
-                i.putExtra("vote_avg", vote_avg[position]);
-                i.putExtra("plot_synopsis", plot_synopsis[position]);
-
-                startActivity(i);*//**//*
-            }
-        });*//*
-
-        if (mGoogleApiClient == null) {
-            mGoogleApiClient = new GoogleApiClient.Builder(MainActivity.this)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .addApi(LocationServices.API)
-                    .build();
-
-        }
-
-        mGoogleApiClient.connect();
-
-        //new FetchWeatherdata().execute("weather");
-        //new Fetchdata().execute("Thumbnail");
-
-
-    }*/
 
 
 
@@ -217,9 +149,9 @@ public class HomeActivityFragment extends Fragment implements
 
 
 
-        // Toast.makeText(MainActivity.this, "Latitude = " + (Double.toString(location.getLatitude())) + "Longitude = " + (Double.toString(location.getLongitude())), Toast.LENGTH_LONG).show();
+
         new FetchWeatherdata().execute("weather");
-        /*new Fetchdata().execute("Thumbnail");*/
+
         if(!country.equals(countryPrev)){
             new Fetchdata().execute("Thumbnail");
             countryPrev = country;
@@ -243,16 +175,14 @@ public class HomeActivityFragment extends Fragment implements
             BufferedReader reader = null;
 
 
-            // Will contain the raw JSON response as a string.
+
             String dataJsonStr = null;
 
             try {
 
-                //String baseurl = "https://newsapi.org/v1/articles?";
+
                 String baseurl = "https://newsapi.org/v1/sources?language=en";
 
-                //https://newsapi.org/v1/articles?source=the-next-web&sortBy=latest&apiKey={API_KEY}
-                //String sort_param = params[0];
 
                 Uri builturi1 = Uri.parse(baseurl).buildUpon()
                         .appendQueryParameter("category", "general")
@@ -294,23 +224,7 @@ public class HomeActivityFragment extends Fragment implements
                 URL url5 = new URL(builturi5.toString());
                 URL url6 = new URL(builturi6.toString());
 
-                /*Log.d("Arr_imageurl","strt");
-                imageUrls[0] = getImgUrl(url1);
-                Log.d("Arr_imageurl","afterFirst");
-                imageUrls[1] = getImgUrl(url2);
-                imageUrls[2] = getImgUrl(url3);
-                imageUrls[3] = getImgUrl(url4);
-                imageUrls[4] = getImgUrl(url5);
-                imageUrls[5] = getImgUrl(url6);
 
-                Log.d("Arr_imageurl","strt");
-                artImageUrls[0] = getImgArtUrl(imageUrls[0]);
-                Log.d("Arr_imageurl","afterFirst");
-                artImageUrls[1] = getImgArtUrl(imageUrls[1]);
-                artImageUrls[2] = getImgArtUrl(imageUrls[2]);
-                artImageUrls[3] = getImgArtUrl(imageUrls[3]);
-                artImageUrls[4] = getImgArtUrl(imageUrls[4]);
-                artImageUrls[5] = getImgArtUrl(imageUrls[5]);*/
 
                 Log.d("Arr_imageurl","strt");
                 imageUrls[0] = getImgUrl(url1);
@@ -346,9 +260,7 @@ public class HomeActivityFragment extends Fragment implements
 
 
 
-                /*urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();*/
+
 
             }catch (IOException e){
                 Log.e("MainActivity", "Error ", e);
@@ -356,82 +268,7 @@ public class HomeActivityFragment extends Fragment implements
 
 
 
-                /*InputStream inputStream = urlConnection.getInputStream();
-                StringBuffer buffer = new StringBuffer();
 
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-
-                    buffer.append(line + "\n");
-                }
-
-                if (buffer.length() == 0) {
-
-                    return null;
-                }
-                dataJsonStr = buffer.toString();
-                MainActivity.JSONstring = dataJsonStr;
-                Log.d("Jsondata1", dataJsonStr);
-                Log.d("Jsondata2", MainActivity.JSONstring);
-            } catch (IOException e) {
-                Log.e("MainActivity", "Error ", e);
-
-                return null;
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (final IOException e) {
-                        Log.e("PlaceholderFragment", "Error closing stream", e);
-                    }
-                }
-            }
-
-            ArrayList a = new ArrayList();
-            try {
-                Log.d("Jsondata", ".JSONObject>");
-                JSONObject articleJson = new JSONObject(JSONstring);
-                Log.d("Jsondata", ".JSONObject<");
-                JSONArray articles = articleJson.getJSONArray("articles");
-                Log.d("Jsondata", ".length()>");
-                String[] titles = new String[articles.length()];
-                Log.d("Jsondata", ".length()<");
-                *//*String[] title = new String[movie.length()];
-                String[] release_date = new String[movie.length()];
-                String[] vote_avg = new String[movie.length()];
-                String[] plot_synopsis = new String[movie.length()];*//*
-
-                JSONObject ob;
-                for (int i = 0; i < articles.length(); i++) {
-                    ob = articles.getJSONObject(i);
-                    titles[i] = ob.getString("title");
-                    if(i==0){
-                        imageUrl = ob.getString("urlToImage");
-                    }
-                    *//*title[i] = ob.getString("original_title");
-                    release_date[i] = ob.getString("release_date");
-                    vote_avg[i] = ob.getString("vote_average");
-                    plot_synopsis[i] = ob.getString("overview");*//*
-
-                    a.add(0, titles);
-                    *//*a.add(1, title);
-                    a.add(2, release_date);
-                    a.add(3, vote_avg);
-                    a.add(4, plot_synopsis);*//*
-
-
-                    Log.d("Articles", titles[i]);
-                }
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }*/
 
             ArrayList a = new ArrayList();
 
@@ -473,7 +310,7 @@ public class HomeActivityFragment extends Fragment implements
                 }
                 dataJsonStrImg = buffer.toString();
                 Log.d("Jsondata1", dataJsonStrImg);
-                // Log.d("Jsondata2", MainActivity.JSONstring);
+
             } catch (IOException e) {
                 Log.e("MainActivity", "Error ", e);
 
@@ -516,7 +353,7 @@ public class HomeActivityFragment extends Fragment implements
 
 
 
-                    //Log.d("Articles", titles[i]);
+
                 }
 
 
@@ -524,7 +361,7 @@ public class HomeActivityFragment extends Fragment implements
                 e.printStackTrace();
             }
 
-            //return imageUrlStr;
+
             return sourceId;
         }
 
@@ -533,11 +370,11 @@ public class HomeActivityFragment extends Fragment implements
             String dataJsonStrImg;
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
-            //String sourceId = "";
+
 
             try{
-                String baseurl = "https://newsapi.org/v1/articles?";//https://newsapi.org/v1/articles?source=the-next-web&sortBy=latest&apiKey={API_KEY}
-                //String sort_param = params[0];
+                String baseurl = "https://newsapi.org/v1/articles?";
+
 
                 Uri builturi = Uri.parse(baseurl).buildUpon()
                         .appendQueryParameter("source",srcId)
@@ -569,7 +406,7 @@ public class HomeActivityFragment extends Fragment implements
                 }
                 dataJsonStrImg = buffer.toString();
                 Log.d("Jsondata1", dataJsonStrImg);
-                // Log.d("Jsondata2", MainActivity.JSONstring);
+
             } catch (IOException e) {
                 Log.e("MainActivity", "Error ", e);
 
@@ -600,7 +437,7 @@ public class HomeActivityFragment extends Fragment implements
                 JSONObject ob;
                 for (int i = 0; i < articles.length(); i++) {
                     ob = articles.getJSONObject(i);
-                    //JSONObject urls = ob.getJSONObject("urlsToLogos");
+
 
                     if(i==0){
 
@@ -611,8 +448,6 @@ public class HomeActivityFragment extends Fragment implements
                     a.add(0, titles);
 
 
-
-                    //Log.d("Articles", titles[i]);
                 }
 
 
@@ -628,11 +463,7 @@ public class HomeActivityFragment extends Fragment implements
         @Override
         protected void onPostExecute(ArrayList list) {
             super.onPostExecute(list);
-           /* titles = (String[]) list.get(0);
-            title = (String[]) list.get(1);
-            release_date = (String[]) list.get(2);
-            vote_avg = (String[]) list.get(3);
-            plot_synopsis = (String[]) list.get(4);*/
+
 
             GridImgViewAdap adapter = new GridImgViewAdap(getActivity());
             GridView grid = (GridView) rootView.findViewById(R.id.gridView);
@@ -645,46 +476,11 @@ public class HomeActivityFragment extends Fragment implements
                     Bundle extras = new Bundle();
                     extras.putString("srcId",imageUrls[i]);
                     ((Callback) getActivity()).onItemSelected(extras);
-                    //intent.putExtra("srcId",imageUrls[i]);
-                    //startActivity(intent);
+
                 }
             });
 
-            /*Picasso.with(getApplicationContext()).load(imageUrl1).into((ImageView)findViewById(R.id.thumbnail1));
-            Picasso.with(getApplicationContext()).load(imageUrl2).into((ImageView)findViewById(R.id.thumbnail2));
-            Picasso.with(getApplicationContext()).load(imageUrl3).into((ImageView)findViewById(R.id.thumbnail3));
-            Picasso.with(getApplicationContext()).load(imageUrl4).into((ImageView)findViewById(R.id.thumbnail4));
-            Picasso.with(getApplicationContext()).load(imageUrl5).into((ImageView)findViewById(R.id.thumbnail5));
-            Picasso.with(getApplicationContext()).load(imageUrl6).into((ImageView)findViewById(R.id.thumbnail6));*/
 
-            /*if (isAdded()){
-                ListCustomAdapter adapter = new ListCustomAdapter(getActivity(), posters);
-                ListView list = (ListView) rootView.findViewById(R.id.listview);
-                list.setAdapter(adapter);
-
-
-                grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Log.d("Clicked", "Clicked");
-
-
-                        Intent i = new Intent(getActivity(), DetailActivity.class);
-                        i.putExtra("poster_url", posters[position]);
-                        i.putExtra("title", title[position]);
-                        i.putExtra("release_date", release_date[position]);
-                        i.putExtra("vote_avg", vote_avg[position]);
-                        i.putExtra("plot_synopsis", plot_synopsis[position]);
-
-                        startActivity(i);
-
-                    }
-                });
-
-
-            }*/
 
         }
     }
@@ -783,37 +579,7 @@ public class HomeActivityFragment extends Fragment implements
 
                 Log.d("weatherId",Integer.toString(weatherId));
 
-      /*          String[] posters = new String[movie.length()];
-                String[] title = new String[movie.length()];
-                String[] release_date = new String[movie.length()];
-                String[] vote_avg = new String[movie.length()];
-                String[] plot_synopsis = new String[movie.length()];
-                String[] movie_id = new String[movie.length()];
-                String[] backdrop_path = new String[movie.length()];
 
-                JSONObject ob;
-                for(int i=0;i<movie.length();i++){
-                    ob = movie.getJSONObject(i);
-                    posters[i] = ob.getString("poster_path") ;
-                    title[i] = ob.getString("original_title") ;
-                    release_date[i] = ob.getString("release_date") ;
-                    vote_avg[i] = ob.getString("vote_average") ;
-                    plot_synopsis[i] = ob.getString("overview") ;
-                    movie_id[i] = ob.getString("id");
-                    backdrop_path[i] = ob.getString("backdrop_path");
-
-                    a.add(0,posters);
-                    a.add(1,title);
-                    a.add(2,release_date);
-                    a.add(3,vote_avg);
-                    a.add(4,plot_synopsis);
-                    a.add(5,movie_id);
-                    a.add(6,backdrop_path);
-
-
-                    Log.d("posters",posters[i]);
-                }
-*/
 
 
             }catch (JSONException e) {
@@ -833,51 +599,7 @@ public class HomeActivityFragment extends Fragment implements
 
             ((ImageView)rootView.findViewById(R.id.weather_img)).setImageResource(getIconResourceForWeatherCondition(weatherId));
 
-/*
-            posters = (String[]) list.get(0);
-            title = (String[]) list.get(1);
-            release_date = (String[]) list.get(2);
-            vote_avg = (String[]) list.get(3);
-            plot_synopsis = (String[]) list.get(4);
-            movie_id = (String[]) list.get(5);
-            backdrop_path = (String[]) list.get(6);
 
-
-            if (isAdded()){
-                GridCustomAdapter adapter = new GridCustomAdapter(getActivity(), posters);
-                GridView grid = (GridView) rootView.findViewById(R.id.gridView);
-                grid.setAdapter(adapter);
-
-
-                grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Log.d("Clicked", "Clicked");
-
-
-                        //Intent i = new Intent(getActivity(), DetailActivity.class);
-                        Bundle extras = new Bundle();
-                        extras.putString("poster_url", posters[position]);
-                        extras.putString("title", title[position]);
-                        extras.putString("release_date", release_date[position]);
-                        extras.putString("vote_avg", vote_avg[position]);
-                        extras.putString("plot_synopsis", plot_synopsis[position]);
-                        extras.putString("movie_id", movie_id[position]);
-                        extras.putString("backdrop_path", backdrop_path[position]);
-                        ((Callback)getActivity()).onItemSelected(extras);
-                    */
-/*i.putExtras(extras);
-                    startActivity(i);*//*
-
-
-                    }
-                });
-
-
-            }
-*/
 
 
 
@@ -948,7 +670,7 @@ public class HomeActivityFragment extends Fragment implements
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             if (convertView == null) {
 
-                //grid = new View(mContext);
+
                 grid = inflater.inflate(R.layout.grid_cell_home,null);
                 ImageView imageView = (ImageView)grid.findViewById(R.id.imageViewGrid);
                 imageView.setAdjustViewBounds(true);

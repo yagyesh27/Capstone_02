@@ -32,7 +32,7 @@ public class GridImgViewAdap extends BaseAdapter {
     @Override
     public int getCount() {
 
-        //return artSource == null ? 0 : artSource.size();
+
         return artSource == null ? 0 : 6;// 6 count size is because of 6 categories of news
     }
 
@@ -58,7 +58,7 @@ public class GridImgViewAdap extends BaseAdapter {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (convertView == null) {
 
-            //grid = new View(mContext);
+
             grid = inflater.inflate(R.layout.grid_cell_home,null);
             ImageView imageView = (ImageView)grid.findViewById(R.id.imageViewGrid);
             imageView.setAdjustViewBounds(true);

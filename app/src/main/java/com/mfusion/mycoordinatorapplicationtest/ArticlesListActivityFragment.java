@@ -59,7 +59,7 @@ public class ArticlesListActivityFragment extends Fragment {
         Intent intent = getActivity().getIntent();
         String srcId = intent.getStringExtra("srcId");
         Toolbar myToolbar = (Toolbar) rootView.findViewById(R.id.my_toolbar);
-        //setSupportActionBar(myToolbar);
+
 
         Bundle extras =  getArguments();
         if (extras != null) {
@@ -76,13 +76,6 @@ public class ArticlesListActivityFragment extends Fragment {
 
         }
 
-           /* if(srcId == null){
-
-            Toast.makeText(getActivity(), "No Data Available", Toast.LENGTH_LONG).show();
-
-        }else{
-            new Fetchdata().execute(srcId);
-        }*/
 
         return rootView;
     }
@@ -99,12 +92,12 @@ public class ArticlesListActivityFragment extends Fragment {
             Log.d("srcId_Detail", params[0]);
             String srcId = params[0];
 
-            // Will contain the raw JSON response as a string.
+
             String dataJsonStr = null;
 
             try {
 
-                String baseurl = "https://newsapi.org/v1/articles?";//https://newsapi.org/v1/articles?source=the-next-web&sortBy=latest&apiKey={API_KEY}
+                String baseurl = "https://newsapi.org/v1/articles?";
 
 
                 Uri builturi = Uri.parse(baseurl).buildUpon()
@@ -179,16 +172,10 @@ public class ArticlesListActivityFragment extends Fragment {
                     urls[i] = ob.getString("url");
                     desc[i] = ob.getString("description");
                     imageUrlStr[i] = ob.getString("urlToImage");
-                    /*title[i] = ob.getString("original_title");
-                    release_date[i] = ob.getString("release_date");
-                    vote_avg[i] = ob.getString("vote_average");
-                    plot_synopsis[i] = ob.getString("overview");*/
+
 
                     a.add(0, titles);
-                    /*a.add(1, title);
-                    a.add(2, release_date);
-                    a.add(3, vote_avg);
-                    a.add(4, plot_synopsis);*/
+
 
 
                     Log.d("ArticlesTitle", titles[i]);
@@ -250,7 +237,7 @@ public class ArticlesListActivityFragment extends Fragment {
 
     public class DetailListAdap extends BaseAdapter {
         private Context mContext;
-        //Integer[] mThumbnails;
+
         String titles[];
         String urls[];
         @Override

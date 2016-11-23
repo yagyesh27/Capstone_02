@@ -20,8 +20,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
 
         public ViewHolder(View v) {
             super(v);
-            /*txtHeader = (TextView) v.findViewById(R.id.firstLine);
-            txtFooter = (TextView) v.findViewById(R.id.secondLine);*/
+
         }
 
     }
@@ -37,7 +36,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
         notifyItemRemoved(position);
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
+
     public RecyclerAdapter(ArrayList<String> myDataset) {
         mDataset = myDataset;
     }
@@ -51,15 +50,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
 
         final String name = mDataset.get(i);
-        /*viewHolder.txtHeader.setText(mDataset.get(i));
-        viewHolder.txtHeader.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                remove(name);
-            }
-        });
 
-        viewHolder.txtFooter.setText("Footer: " + mDataset.get(i));*/
 
     }
 

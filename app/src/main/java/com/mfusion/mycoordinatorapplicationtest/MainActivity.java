@@ -13,7 +13,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
-/*import android.support.v4.app.LoaderManager;*/
+
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -54,7 +54,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener/*, LoaderManager.LoaderCallbacks<ArrayList<ArticleSourceImage>>*/,LoaderManager.LoaderCallbacks<Cursor> {
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener,LoaderManager.LoaderCallbacks<Cursor> {
 
     static String JSONstring;
     String imageUrl1,imageUrl2,imageUrl3,imageUrl4,imageUrl5,imageUrl6;
@@ -105,8 +105,7 @@ public class MainActivity extends AppCompatActivity implements
                     } while (c.moveToNext());
                 }
 
-                /*Log.d("DB return", c.getString(c.getColumnIndex( ArticleSourceImage.COL_SOURCE)) +
-                        ", " + c.getString(c.getColumnIndex( ArticleSourceImage.COL_ART_IMG_URL)));*/
+
 
                 Snackbar.make(view, "Hello Snackbar", Snackbar.LENGTH_LONG).show();
             }
@@ -153,8 +152,6 @@ public class MainActivity extends AppCompatActivity implements
         adapter = new GridImgViewAdap(MainActivity.this, listAdap);
 
 
-        //new FetchWeatherdata().execute("weather");
-        //new Fetchdata().execute("Thumbnail");
 
 
     }
@@ -168,15 +165,8 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-       /* if (id == R.id.action_settings) {
-            return true;
-        }*/
         if (id == R.id.action_location) {
             startActivity(new Intent(getApplicationContext(), PositionActivity.class));
             return true;
@@ -185,10 +175,6 @@ public class MainActivity extends AppCompatActivity implements
             startActivity(new Intent(getApplicationContext(), PlacesActivity.class));
             return true;
         }
-        /*if (id == R.id.action_home) {
-            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-            return true;
-        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -234,13 +220,13 @@ public class MainActivity extends AppCompatActivity implements
 
 
 
-       // Toast.makeText(MainActivity.this, "Latitude = " + (Double.toString(location.getLatitude())) + "Longitude = " + (Double.toString(location.getLongitude())), Toast.LENGTH_LONG).show();
+
       if(activeNetworkInfo.isConnected()) {
 
           Log.d("Location","Location dvdvdb" + activeNetworkInfo.isConnected());
 
           new FetchWeatherdata().execute("weather");
-        /*new Fetchdata().execute("Thumbnail");*/
+
           if (!country.equals(countryPrev)) {
 
 
@@ -265,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements
         return new CursorLoader(this,
                 Uri.parse("content://com.mfusion.mycoordinatorapplicationtest.data.ArticleSourceImageProvider")
                 , new String[]{"source", "artImgUrl", "artTitle" }, null, null, null);
-        /*return null;*/
+
     }
 
     @Override
@@ -295,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements
 
         adapter.notifyDataSetChanged();
 
-       // adapter.setArticleSourceImages(list);
+
     }
 
     @Override
@@ -322,11 +308,9 @@ public class MainActivity extends AppCompatActivity implements
 
             try {
 
-                //String baseurl = "https://newsapi.org/v1/articles?";
+
                 String baseurl = "https://newsapi.org/v1/sources?language=en";
 
-                //https://newsapi.org/v1/articles?source=the-next-web&sortBy=latest&apiKey={API_KEY}
-                //String sort_param = params[0];
 
                 Uri builturi1 = Uri.parse(baseurl).buildUpon()
                         .appendQueryParameter("category", "general")
@@ -469,7 +453,7 @@ public class MainActivity extends AppCompatActivity implements
             }
             dataJsonStrImg = buffer.toString();
             Log.d("Jsondata1", dataJsonStrImg);
-           // Log.d("Jsondata2", MainActivity.JSONstring);
+
         } catch (IOException e) {
             Log.e("MainActivity", "Error ", e);
 
@@ -512,7 +496,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
 
-                //Log.d("Articles", titles[i]);
+
             }
 
 
@@ -520,7 +504,7 @@ public class MainActivity extends AppCompatActivity implements
             e.printStackTrace();
         }
 
-        //return imageUrlStr;
+
             return sourceId;
     }
 
@@ -529,11 +513,11 @@ public class MainActivity extends AppCompatActivity implements
             String dataJsonStrImg;
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
-            //String sourceId = "";
+
 
             try{
-                String baseurl = "https://newsapi.org/v1/articles?";//https://newsapi.org/v1/articles?source=the-next-web&sortBy=latest&apiKey={API_KEY}
-                //String sort_param = params[0];
+                String baseurl = "https://newsapi.org/v1/articles?";
+
 
                 Uri builturi = Uri.parse(baseurl).buildUpon()
                         .appendQueryParameter("source",srcId)
@@ -565,7 +549,7 @@ public class MainActivity extends AppCompatActivity implements
                 }
                 dataJsonStrImg = buffer.toString();
                 Log.d("Jsondata1", dataJsonStrImg);
-                // Log.d("Jsondata2", MainActivity.JSONstring);
+
             } catch (IOException e) {
                 Log.e("MainActivity", "Error ", e);
 
@@ -596,7 +580,7 @@ public class MainActivity extends AppCompatActivity implements
                 JSONObject ob;
                 for (int i = 0; i < articles.length(); i++) {
                     ob = articles.getJSONObject(i);
-                    //JSONObject urls = ob.getJSONObject("urlsToLogos");
+
 
                     if(i==0){
 
@@ -606,9 +590,6 @@ public class MainActivity extends AppCompatActivity implements
 
                     a.add(0, titles);
 
-
-
-                    //Log.d("Articles", titles[i]);
                 }
 
 
@@ -625,11 +606,10 @@ public class MainActivity extends AppCompatActivity implements
             String dataJsonStrImg;
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
-            //String sourceId = "";
+
 
             try{
-                String baseurl = "https://newsapi.org/v1/articles?";//https://newsapi.org/v1/articles?source=the-next-web&sortBy=latest&apiKey={API_KEY}
-                //String sort_param = params[0];
+                String baseurl = "https://newsapi.org/v1/articles?";
 
                 Uri builturi = Uri.parse(baseurl).buildUpon()
                         .appendQueryParameter("source",srcId)
@@ -661,7 +641,7 @@ public class MainActivity extends AppCompatActivity implements
                 }
                 dataJsonStrImg = buffer.toString();
                 Log.d("Jsondata1", dataJsonStrImg);
-                // Log.d("Jsondata2", MainActivity.JSONstring);
+
             } catch (IOException e) {
                 Log.e("MainActivity", "Error ", e);
 
@@ -692,7 +672,6 @@ public class MainActivity extends AppCompatActivity implements
                 JSONObject ob;
                 for (int i = 0; i < articles.length(); i++) {
                     ob = articles.getJSONObject(i);
-                    //JSONObject urls = ob.getJSONObject("urlsToLogos");
 
                     if(i==0){
 
@@ -703,8 +682,6 @@ public class MainActivity extends AppCompatActivity implements
                     a.add(0, titles);
 
 
-
-                    //Log.d("Articles", titles[i]);
                 }
 
 
@@ -742,9 +719,6 @@ public class MainActivity extends AppCompatActivity implements
 
 
 
-            /*adapter = new GridImgViewAdap(MainActivity.this, new ArrayList<ArticleSourceImage>());
-            GridView grid = (GridView) findViewById(R.id.gridView);
-            grid.setAdapter(adapter);*/
 
             adapter = new GridImgViewAdap(MainActivity.this, listAdap);
             grid = (GridView) findViewById(R.id.gridView);

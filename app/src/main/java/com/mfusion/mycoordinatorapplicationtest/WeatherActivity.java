@@ -29,7 +29,7 @@ public class WeatherActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.weatherText)).setContentDescription(i.getStringExtra("weatherDesc"));
         ((TextView)findViewById(R.id.placeText)).setText(i.getStringExtra("place"));
         ((TextView)findViewById(R.id.placeText)).setContentDescription(i.getStringExtra("place"));
-        //((TextView)findViewById(R.id.maxTempText)).setText( Double.toString(i.getDoubleExtra("maxTemp",0.00)) + "°C");
+
         ((TextView)findViewById(R.id.maxTempText)).setText(precision.format(i.getDoubleExtra("maxTemp",0.00)) + "°C");
         ((TextView)findViewById(R.id.maxTempText)).setContentDescription(precision.format(i.getDoubleExtra("maxTemp", 0.00)) + "°C");
         ((TextView)findViewById(R.id.minTempText)).setText(precision.format(i.getDoubleExtra("minTemp", 0.00)) + "°C");
@@ -40,19 +40,15 @@ public class WeatherActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_weather, menu);
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -61,8 +57,7 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     public  int getIconResourceForWeatherCondition(int weatherId) {
-        // Based on weather code data found at:
-        // http://bugs.openweathermap.org/projects/api/wiki/Weather_Condition_Codes
+
         if (weatherId >= 200 && weatherId <= 232) {
             return R.drawable.ic_storm;
         } else if (weatherId >= 300 && weatherId <= 321) {

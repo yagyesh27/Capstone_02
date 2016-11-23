@@ -3,6 +3,7 @@ package com.mfusion.mycoordinatorapplicationtest;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.util.Log;
 import android.widget.RemoteViews;
@@ -15,11 +16,12 @@ import com.mfusion.mycoordinatorapplicationtest.data.ArticleSourceImageProvider;
  */
 public class NewsAppWidget extends AppWidgetProvider {
 
+    static String titles[]={"","","","","",""};
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
         final int N = appWidgetIds.length;
-        String titles[]={"","","","","",""};
+
         for (int i = 0; i < N; i++) {
 
             RemoteViews mView = new RemoteViews(context.getPackageName(), R.layout.news_app_widget);
@@ -32,6 +34,8 @@ public class NewsAppWidget extends AppWidgetProvider {
 
                 cursor.getString(cursor.getColumnIndex( ArticleSourceImage.COL_SOURCE));
                 titles[ind] = cursor.getString(cursor.getColumnIndex( ArticleSourceImage.COL_ART_TITLE));
+
+                Log.d("Widget Iteration",ind + " - " + titles[ind] + " - " + cursor.getString(cursor.getColumnIndex( ArticleSourceImage.COL_ART_TITLE)));
 
                 ind++;
 
@@ -85,8 +89,26 @@ public class NewsAppWidget extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.news_app_widget);
         //views.setTextViewText(R.id.appwidget_text, widgetText);
 
+        views.setTextViewText(R.id.textViewW1, titles[0]);
+        views.setContentDescription(R.id.textViewW1, titles[0]);
+        views.setTextViewText(R.id.textViewW2, titles[1]);
+        views.setContentDescription(R.id.textViewW2, titles[1]);
+        views.setTextViewText(R.id.textViewW3, titles[2]);
+        views.setContentDescription(R.id.textViewW3, titles[2]);
+        views.setTextViewText(R.id.textViewW4, titles[3]);
+        views.setContentDescription(R.id.textViewW4, titles[3]);
+        views.setTextViewText(R.id.textViewW5, titles[4]);
+        views.setContentDescription(R.id.textViewW5, titles[4]);
+        views.setTextViewText(R.id.textViewW6, titles[5]);
+        views.setContentDescription(R.id.textViewW6, titles[5]);
+
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
+    }
+
+    public void gotoapp(){
+        Intent i;
+
     }
 }
 

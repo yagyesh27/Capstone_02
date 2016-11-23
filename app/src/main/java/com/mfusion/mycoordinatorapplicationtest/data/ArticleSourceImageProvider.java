@@ -20,11 +20,9 @@ public class ArticleSourceImageProvider extends ContentProvider {
     public static final String PROVIDER_NAME = "com.mfusion.mycoordinatorapplicationtest.data.ArticleSourceImageProvider";
     final static int SOURCE = 1;
 
-    // URIs
-    // Used for all persons
     public static final String ARTICLESOURCES = SCHEME + AUTHORITY + "/articlesources";
     public static final Uri URI_ARTICLESOURCES = Uri.parse(ARTICLESOURCES);
-    // Used for a single person, just add the id to the end
+
     public static final String ARTICLESOURCES_BASE = ARTICLESOURCES + "/";
 
     private static HashMap<String, String> ARTICLESOURCE_PROJECTION_MAP;
@@ -44,7 +42,7 @@ public class ArticleSourceImageProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        // Implement this to handle requests to delete one or more rows.
+
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
@@ -52,27 +50,20 @@ public class ArticleSourceImageProvider extends ContentProvider {
     public String getType(Uri uri) {
 
         switch (uriMatcher.match(uri)){
-            /**
-             * Get all student records
-             */
+
             case SOURCE:
                 return "com.mfusion.mycoordinatorapplicationtest.data.ArticleSourceImage";
-            /**
-             * Get a particular student
-             */
+
 
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
         }
 
-        /*// TODO: Implement this to handle requests for the MIME type of the data
-        // at the given URI.
-        throw new UnsupportedOperationException("Not yet implemented");*/
+
     }
 
     @Override
     public Uri insert(Uri uri, ContentValues contentValues) {
-        // TODO: Implement this to handle requests to insert a new row.
 
         SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         long rowID = db.insert(	ArticleSourceImage.TABLE_NAME, "", contentValues);
@@ -122,30 +113,11 @@ public class ArticleSourceImageProvider extends ContentProvider {
         }
 
         Cursor c = qb.query(db,	projection,	selection,
-                selectionArgs,null, null, null); //sortOrder
+                selectionArgs,null, null, null);
 
         c.setNotificationUri(getContext().getContentResolver(), uri);
         return c;
-   /*     if (URI_ARTICLESOURCES.equals(uri)) {
-            result = mOpenHelper
-                    .getReadableDatabase()
-                    .query(ArticleSourceImage.TABLE_NAME, ArticleSourceImage.FIELDS, null, null, null,
-                            null, null, null);
-            result.setNotificationUri(getContext().getContentResolver(), URI_ARTICLESOURCES);
-        } else if (uri.toString().startsWith(ARTICLESOURCES_BASE)) {
-            final long id = Long.parseLong(uri.getLastPathSegment());
-            result = mOpenHelper
-                    .getReadableDatabase()
-                    .query(ArticleSourceImage.TABLE_NAME, ArticleSourceImage.FIELDS,
-                            ArticleSourceImage.COL_ID + " IS ?",
-                            new String[] { String.valueOf(id) }, null, null,
-                            null, null);
-            result.setNotificationUri(getContext().getContentResolver(), URI_ARTICLESOURCES);
-        } else {
-            throw new UnsupportedOperationException("Not yet implemented");
-        }*/
 
-       // return result;
     }
 
     @Override
@@ -165,8 +137,7 @@ public class ArticleSourceImageProvider extends ContentProvider {
 
         getContext().getContentResolver().notifyChange(uri, null);
         return count;
-        /*// TODO: Implement this to handle requests to update one or more rows.
-        throw new UnsupportedOperationException("Not yet implemented");*/
+
     }
 
 }

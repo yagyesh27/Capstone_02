@@ -26,7 +26,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        // Good idea to use process context here
+
         this.context = context.getApplicationContext();
     }
 
@@ -71,7 +71,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (result > 0) {
             success = true;
         } else {
-            // Update failed or wasn't possible, insert instead
+
             final long id = db.insert(ArticleSourceImage.TABLE_NAME, null,
                     articleSourceImage.getContent());
 

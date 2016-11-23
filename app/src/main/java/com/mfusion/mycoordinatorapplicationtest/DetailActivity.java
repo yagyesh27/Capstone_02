@@ -61,19 +61,16 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-       // getMenuInflater().inflate(R.menu.menu_detail, menu);
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+
         if (id == R.id.action_settings) {
             return true;
         }
@@ -98,8 +95,7 @@ public class DetailActivity extends AppCompatActivity {
 
             try {
 
-                String baseurl = "https://newsapi.org/v1/articles?";//https://newsapi.org/v1/articles?source=the-next-web&sortBy=latest&apiKey={API_KEY}
-               //String sort_param = params[0];
+                String baseurl = "https://newsapi.org/v1/articles?";
 
                 Uri builturi = Uri.parse(baseurl).buildUpon()
                         .appendQueryParameter("source",srcId)
@@ -164,10 +160,7 @@ public class DetailActivity extends AppCompatActivity {
                 String[] desc = new String[articles.length()];
                 String[] imageUrlStr = new String[articles.length()];
                 Log.d("Jsondata", ".length()<");
-                /*String[] title = new String[movie.length()];
-                String[] release_date = new String[movie.length()];
-                String[] vote_avg = new String[movie.length()];
-                String[] plot_synopsis = new String[movie.length()];*/
+
 
                 JSONObject ob;
                 for (int i = 0; i < articles.length(); i++) {
@@ -176,16 +169,9 @@ public class DetailActivity extends AppCompatActivity {
                     urls[i] = ob.getString("url");
                     desc[i] = ob.getString("description");
                     imageUrlStr[i] = ob.getString("urlToImage");
-                    /*title[i] = ob.getString("original_title");
-                    release_date[i] = ob.getString("release_date");
-                    vote_avg[i] = ob.getString("vote_average");
-                    plot_synopsis[i] = ob.getString("overview");*/
 
                     a.add(0, titles);
-                    /*a.add(1, title);
-                    a.add(2, release_date);
-                    a.add(3, vote_avg);
-                    a.add(4, plot_synopsis);*/
+
 
 
                     Log.d("ArticlesTitle", titles[i]);
@@ -213,11 +199,7 @@ public class DetailActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList list) {
             super.onPostExecute(list);
-            /*titles = (String[]) list.get(0);
-            title = (String[]) list.get(1);
-            release_date = (String[]) list.get(2);
-            vote_avg = (String[]) list.get(3);
-            plot_synopsis = (String[]) list.get(4);*/
+
 
 
                 DetailListAdap adapter = new DetailListAdap(DetailActivity.this, titles,urls);
@@ -238,14 +220,7 @@ public class DetailActivity extends AppCompatActivity {
                         browserIntent.putExtra("description",desc[position]);
                         startActivity(browserIntent);
 
-                        /*Intent i = new Intent(getActivity(), DetailActivity.class);
-                        i.putExtra("poster_url", posters[position]);
-                        i.putExtra("title", title[position]);
-                        i.putExtra("release_date", release_date[position]);
-                        i.putExtra("vote_avg", vote_avg[position]);
-                        i.putExtra("plot_synopsis", plot_synopsis[position]);
 
-                        startActivity(i);*/
 
                     }
                 });
@@ -258,7 +233,7 @@ public class DetailActivity extends AppCompatActivity {
 
     public class DetailListAdap extends BaseAdapter {
         private Context mContext;
-        //Integer[] mThumbnails;
+
         String titles[];
         String urls[];
         @Override
@@ -289,16 +264,13 @@ public class DetailActivity extends AppCompatActivity {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             if (convertView == null) {
 
-                //grid = new View(mContext);
+
                 list = inflater.inflate(R.layout.detail_list_item,null);
                 TextView textview = (TextView)list.findViewById(R.id.article_title_text);
                 textview.setText(titles[i]);
                 textview.setContentDescription(titles[i]);
 
-                /*ImageView imageView = (ImageView)grid.findViewById(R.id.imageViewGrid);
-                imageView.setAdjustViewBounds(true);*/
 
-                //Picasso.with(mContext).load(artImageUrls[i]).into(imageView);
 
 
             } else {

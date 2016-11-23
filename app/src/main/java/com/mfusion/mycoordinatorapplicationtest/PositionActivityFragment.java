@@ -45,9 +45,6 @@ public class PositionActivityFragment extends Fragment implements
 
         Log.d("position", " position");
 
-        //Toast.makeText(getActivity(),"position",Toast.LENGTH_LONG).show();
-
-
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                     .addConnectionCallbacks(this)
@@ -78,18 +75,7 @@ public class PositionActivityFragment extends Fragment implements
             requestPermissions(INITIAL_PERMS,101);
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }
-        /*try {
-            Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
-                    mGoogleApiClient);
-            if (mLastLocation != null) {
-                *//*TextView mLatitudeText = find
-                TextView mLongitudeText*//*
-                ((TextView) rootView.findViewById(R.id.textView1)).setText(String.valueOf(mLastLocation.getLatitude()));
-               ((TextView) rootView.findViewById(R.id.textView2)).setText(String.valueOf(mLastLocation.getLongitude()));
-                Log.d("LatitudeText",String.valueOf(mLastLocation.getLatitude()));
-                Log.d("LongitudeText",String.valueOf(mLastLocation.getLongitude()));
-            }
-        }*/catch (Exception e){
+       catch (Exception e){
 
             Log.e("Position",e.toString());
 
@@ -126,7 +112,7 @@ public class PositionActivityFragment extends Fragment implements
         ((TextView) rootView.findViewById(R.id.textView1)).setText(Double.toString(location.getLatitude()));
         ((TextView) rootView.findViewById(R.id.textView2)).setText(Double.toString(location.getLongitude()));
 
-        //Toast.makeText(getActivity(),"Latitude = " + (Double.toString(location.getLatitude())) + "Longitude = "+(Double.toString(location.getLongitude())),Toast.LENGTH_LONG).show();
+
 
         
     }
